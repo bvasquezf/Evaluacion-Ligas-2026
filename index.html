@@ -121,11 +121,62 @@
 
     <script>
 
-        const endpoint = "https://script.google.com/macros/s/AKfycbwDRHhc3zYQcChrgW-yTCOnacllHOJ4AEZe-50utsFWh42GkNQ_-HfsZT8i-dkhq2Yr/exec";
+        const endpoint = "https://script.google.com/macros/s/AKfycbw3pzGgJZzKmsNn9Vp-TZ2H01zNd2CqaSVwkog80_euM8_Ju2dsLMBm15ISzawt5deh/exec";
 
         const preguntas = [
             "Presionar la pelota contra el piso con lado hueco del cabezal (scoop)",
-            "Mantener el equilibrio posicionado en lugar específico, bicicleta detenida y mallet bien apoyado en el suelo"
+            "Mantener el equilibrio posicionado en lugar específico, bicicleta detenida y mallet bien apoyado en el suelo",
+            "Fuera de un partido: Bajar mallet al piso mientras la bici esté en movimiento/tocar piso con la mano",
+            "Saltar encalado (o no) con ambas ruedas, repetidamente, girando en el eje de la caja de motor",
+            "Armado, coordinación y dirección de equipo en un partido",
+            "Dar vuelta en círculo con una mano en el manubrio y la otra inicialmente apoyando el mallet",
+            "Nociones avanzadas de posiciones en la cancha",
+            "Pasar la pelota de un lado al otro de la bici utilizando scoop hacia ambos lados",
+            "Llevar la pelota una vuelta completa a la cancha en donde yo la quiero",
+            "Pedalear y frenar idealmente con una mano",
+            "Pases con rueda delantera",
+            "Pivoteo continuo con ambas ruedas",
+            "Dar un pase con el lado largo de la cabeza",
+            "No caerse en situaciones de carrera y frenar bruscamente",
+            "Bajar mallet al piso para tapar una pelota bajo caja de motor en el arco",
+            "Pivoteo en +90° con ambas ruedas",
+            "Recibir un pase por tu lado hábil",
+            "Dar un pase por tu lado hábil",
+            "Dar pases o tiros direccionados",
+            "Bajar mallet para interferir pases",
+            "En movimiento recto: Saltar con ambas ruedas para cambiar dirección",
+            "Bajar mallet para defender el arco y volver a posición",
+            "Hablar de forma táctica para coordinación de equipo",
+            "Conducir la bicicleta con una mano",
+            "Llevar pelota por delante moviendo la bici de lado a lado",
+            "Utilizar scoop dentro de partidos",
+            "Scoop de revés",
+            "Nociones básicas de posicionamiento en la cancha",
+            "Hacer un tiro por tu lado hábil",
+            "Nociones de juego en pared y esquinas",
+            "Utilización de la bicicleta para ganar posición",
+            "Recibir pase, preparar tiro y tirar de primera",
+            "Lectura de partidos",
+            "Pasar la pelota de un lado al otro por caja de motor 2 veces",
+            "Entrar al área y mantener posición de arquero",
+            "Saltar repetidamente moviéndose adelante, atrás y lados",
+            "Buenas salidas en situaciones en pared",
+            "Pases con rueda trasera",
+            "Dar un pase hacia atrás",
+            "Llevar la pelota por ambos lados de la bici",
+            "Scoop sin bicicleta hacia arriba",
+            "Pivotear en 45° con rueda trasera",
+            "Recibir pase, preparar tiro y tirar en 3 movimientos",
+            "Juego con las manos controlando pelotas aéreas",
+            "Pivotear en +45° con rueda delantera",
+            "Acomodar la bicicleta al arco",
+            "Recibir un pase por tu lado no hábil",
+            "Frenar con rueda delantera y levantar rueda trasera",
+            "Recibir pase, preparar tiro y tirar en 2 movimientos",
+            "Pivotear en 90° con rueda trasera",
+            "Tiro al arco desde cualquier parte de la cancha",
+            "Defender 1v1 cerca del área por ambos lados",
+            "Scoop básico con bicicleta hacia arriba"
         ];
 
         const contenedor = document.getElementById("preguntas");
@@ -153,7 +204,7 @@
 
             let puntaje = 0;
 
-            for (let i = 1; i <= 2; i++) {
+            for (let i = 1; i <= 53; i++) {
                 const respuesta = document.querySelector(`input[name="p${i}"]:checked`);
                 puntaje += parseInt(respuesta.value);
             }
