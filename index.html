@@ -77,6 +77,128 @@
                 justify-content: space-between;
             }
         }
+
+        .progress-container {
+            width: 100%;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #4caf50;
+            transition: width 0.3s ease;
+        }
+
+        .mensaje-exito {
+            display: none;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-wrapper {
+            position: sticky;
+            top: 0;
+            background: #f4f6f9;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #4caf50;
+            transition: width 0.3s ease;
+        }
+
+        #progressText {
+            text-align: center;
+            font-weight: bold;
+            margin: 5px 0 0 0;
+        }
+
+        .progress-completo {
+            animation: pulseGreen 0.6s ease-in-out;
+            background: #2e7d32 !important;
+        }
+
+        @keyframes pulseGreen {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .card.completada {
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .respuesta-final {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-top: 5px;
+        }
+
+        .info-alternativas {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .info-alternativas h3 {
+            margin-top: 0;
+            color: #1e88e5;
+        }
+
+        .info-alternativas ul {
+            padding-left: 20px;
+            margin: 10px 0 0 0;
+        }
+
+        .info-alternativas li {
+            margin-bottom: 6px;
+        }
     </style>
 </head>
 
@@ -85,6 +207,18 @@
     <div class="container">
 
         <h1>Evaluación Técnica</h1>
+
+        <div id="mensajeExito" class="mensaje-exito">
+            ✅ Evaluación enviada correctamente
+        </div>
+
+        <div class="progress-wrapper">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p id="progressText">0% completado</p>
+            <p id="preguntaActual"></p>
+        </div>
 
         <form id="formulario">
 
@@ -109,10 +243,23 @@
                 <label><input type="radio" name="ligas" value="No"> No</label>
             </div>
 
+            <div class="info-alternativas">
+                <h3>Instrucciones</h3>
+                <p>Marca la alternativa que más se acerque a tu juego, de acuerdo a las siguientes descripciones:</p>
+
+                <ul>
+                    <li><strong>SIEMPRE:</strong> 8 a 10 de 10 veces puedo hacerlo bien sin fallas.</li>
+                    <li><strong>A VECES:</strong> 4 a 6 de 10 veces puedo hacerlo, pero no siempre me sale bien.</li>
+                    <li><strong>NUNCA:</strong> Menos de 3 de 10 veces me sale bien, en general me ayuda bastante la
+                        suerte.</li>
+                </ul>
+            </div>
+
+
             <div id="preguntas"></div>
 
             <div class="card">
-                <button type="submit">Enviar Evaluación</button>
+                <button type="submit" id="btnEnviar" disabled>Enviar Evaluación</button>
             </div>
 
         </form>
@@ -181,30 +328,193 @@
 
         const contenedor = document.getElementById("preguntas");
 
+
+        // 🔥 Generar preguntas dinámicamente
         preguntas.forEach((texto, index) => {
+
             const numero = index + 1;
+
+            if (numero % 10 === 1) {
+                const separador = document.createElement("div");
+                separador.innerHTML = `<h3 style="margin-top:30px;">Bloque ${Math.ceil(numero / 10)}</h3>`;
+                contenedor.appendChild(separador);
+            }
 
             const card = document.createElement("div");
             card.className = "card";
 
             card.innerHTML = `
-    <div class="pregunta">${numero}. ${texto}</div>
-    <div class="opciones">
-      <label><input type="radio" name="p${numero}" value="3" required> Siempre</label>
-      <label><input type="radio" name="p${numero}" value="2"> A veces</label>
-      <label><input type="radio" name="p${numero}" value="1"> Nunca</label>
-    </div>
-  `;
+        <div class="pregunta">${numero}. ${texto}</div>
+        <div class="opciones">
+            <label><input type="radio" name="p${numero}" value="3" required> Siempre</label>
+            <label><input type="radio" name="p${numero}" value="2"> A veces</label>
+            <label><input type="radio" name="p${numero}" value="1"> Nunca</label>
+        </div>
+    `;
 
             contenedor.appendChild(card);
+
+            card.querySelectorAll("input[type='radio']").forEach(radio => {
+                radio.addEventListener("change", function () {
+
+                    actualizarProgreso();
+
+                    // 🔥 Guardar respuesta pregunta
+                    localStorage.setItem(this.name, this.value);
+
+                    const cardActual = this.closest(".card");
+
+                    if (cardActual.classList.contains("completada")) return;
+
+                    const opciones = cardActual.querySelector(".opciones");
+                    opciones.style.display = "none";
+
+                    const respuestaFinal = document.createElement("div");
+                    respuestaFinal.className = "respuesta-final";
+                    respuestaFinal.innerText = "Respuesta: " + this.parentElement.innerText;
+
+                    cardActual.appendChild(respuestaFinal);
+                    cardActual.classList.add("completada");
+
+                    const numeroActual = parseInt(this.name.replace("p", ""));
+                    const siguiente = document.querySelector(`input[name="p${numeroActual + 1}"]`);
+
+                    if (siguiente) {
+                        siguiente.closest(".card").scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    }
+                });
+            });
+
         });
 
-        document.getElementById("formulario").addEventListener("submit", async function (e) {
+
+        // 🔥 GUARDAR CAMPOS INFORMATIVOS AUTOMÁTICAMENTE
+        const camposInfo = [
+            "nombre",
+            "anioIngreso",
+            "nacionales",
+            "internacionales",
+            "latinos",
+            "somos",
+            "wildcard"
+        ];
+
+        camposInfo.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener("input", function () {
+                    localStorage.setItem(id, this.value);
+                });
+            }
+        });
+
+        // Guardar radio ligas
+        document.querySelectorAll('input[name="ligas"]').forEach(radio => {
+            radio.addEventListener("change", function () {
+                localStorage.setItem("ligas", this.value);
+            });
+        });
+
+
+        // 🔥 RESTAURAR PROGRESO PREGUNTAS
+        preguntas.forEach((_, index) => {
+
+            const numero = index + 1;
+            const valorGuardado = localStorage.getItem("p" + numero);
+
+            if (valorGuardado) {
+
+                const radio = document.querySelector(`input[name="p${numero}"][value="${valorGuardado}"]`);
+
+                if (radio) {
+
+                    radio.checked = true;
+
+                    const cardActual = radio.closest(".card");
+                    const opciones = cardActual.querySelector(".opciones");
+                    opciones.style.display = "none";
+
+                    const respuestaFinal = document.createElement("div");
+                    respuestaFinal.className = "respuesta-final";
+                    respuestaFinal.innerText = "Respuesta: " + radio.parentElement.innerText;
+
+                    cardActual.appendChild(respuestaFinal);
+                    cardActual.classList.add("completada");
+                }
+            }
+        });
+
+
+        // 🔥 RESTAURAR CAMPOS INFORMATIVOS
+        camposInfo.forEach(id => {
+            const valor = localStorage.getItem(id);
+            if (valor) {
+                const input = document.getElementById(id);
+                if (input) input.value = valor;
+            }
+        });
+
+        // Restaurar ligas
+        const ligasGuardado = localStorage.getItem("ligas");
+        if (ligasGuardado) {
+            const radio = document.querySelector(`input[name="ligas"][value="${ligasGuardado}"]`);
+            if (radio) radio.checked = true;
+        }
+
+
+        // 🔥 Actualizar barra después de restaurar
+        actualizarProgreso();
+
+
+        // 🔥 Barra de progreso
+        function actualizarProgreso() {
+
+            let respondidas = 0;
+
+            for (let i = 1; i <= preguntas.length; i++) {
+                const seleccion = document.querySelector(`input[name="p${i}"]:checked`);
+                if (seleccion) respondidas++;
+            }
+
+            const porcentaje = Math.round((respondidas / preguntas.length) * 100);
+
+            const barra = document.getElementById("progressBar");
+            const texto = document.getElementById("progressText");
+            const btn = document.getElementById("btnEnviar");
+
+            if (barra) barra.style.width = porcentaje + "%";
+            if (texto) texto.innerText = porcentaje + "% completado";
+
+            if (porcentaje === 100) {
+                btn.disabled = false;
+                barra.style.background = "#2e7d32";
+            } else {
+                btn.disabled = true;
+                barra.style.background = "#4caf50";
+            }
+
+            for (let i = preguntas.length; i >= 1; i--) {
+                const seleccion = document.querySelector(`input[name="p${i}"]:checked`);
+                if (seleccion) {
+                    document.getElementById("preguntaActual").innerText =
+                        "Última respondida: " + i + " de " + preguntas.length;
+                    break;
+                }
+            }
+        }
+
+
+        // 🔥 Envío del formulario
+        document.getElementById("formulario").addEventListener("submit", function (e) {
+
             e.preventDefault();
 
             let puntaje = 0;
 
-            for (let i = 1; i <= 53; i++) {
+            for (let i = 1; i <= preguntas.length; i++) {
                 const respuesta = document.querySelector(`input[name="p${i}"]:checked`);
                 puntaje += parseInt(respuesta.value);
             }
@@ -212,9 +522,9 @@
             let nivel = "";
 
             if (puntaje <= 74) nivel = "Inicial";
-            else if (puntaje <= 96) nivel = "Inicial-Avanzado";
+            else if (puntaje <= 96) nivel = "Inicial(+)";
             else if (puntaje <= 118) nivel = "Intermedio";
-            else if (puntaje <= 140) nivel = "Intermedio-Avanzado";
+            else if (puntaje <= 140) nivel = "Intermedio(+)";
             else nivel = "Avanzado";
 
             const data = {
@@ -231,28 +541,50 @@
             };
 
             const formData = new FormData();
+            Object.keys(data).forEach(key => formData.append(key, data[key]));
 
-            Object.keys(data).forEach(key => {
-                formData.append(key, data[key]);
-            });
+            const btn = document.getElementById("btnEnviar");
+            btn.disabled = true;
+            btn.innerText = "Enviando...";
 
             fetch(endpoint, {
                 method: "POST",
                 body: formData
             })
                 .then(() => {
-                    alert("Evaluación enviada correctamente.");
+
+                    // 🔥 LIMPIAR TODO EL PROGRESO
+                    localStorage.clear();
+
+                    const mensaje = document.getElementById("mensajeExito");
+                    mensaje.style.display = "block";
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                    document.getElementById("formulario").reset();
+                    actualizarProgreso();
+
+                    btn.innerText = "Enviar Evaluación";
+
+                    setTimeout(() => {
+                        mensaje.style.display = "none";
+                    }, 4000);
+
                 })
                 .catch(error => {
                     console.error("Error:", error);
+                    btn.disabled = false;
+                    btn.innerText = "Enviar Evaluación";
                 });
 
-
-            alert("Evaluación enviada correctamente.");
-            document.getElementById("formulario").reset();
         });
 
     </script>
+
+
 
 </body>
 
