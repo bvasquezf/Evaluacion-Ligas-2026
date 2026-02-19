@@ -1,134 +1,142 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evaluación Club</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Club</title>
 
-<style>
-body{
-  margin:0;
-  font-family: Arial, Helvetica, sans-serif;
-  background:#f4f6f9;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+        }
 
-.container{
-  max-width:800px;
-  margin:auto;
-  padding:20px;
-}
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
 
-.card{
-  background:white;
-  padding:20px;
-  margin-bottom:15px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
-}
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
 
-h1{
-  text-align:center;
-}
+        h1 {
+            text-align: center;
+        }
 
-.pregunta{
-  font-weight:bold;
-  margin-bottom:10px;
-}
+        .pregunta {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-.opciones{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-.opciones label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:8px;
-  border-radius:6px;
-  background:#f1f1f1;
-  cursor:pointer;
-}
+        .opciones label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 6px;
+            background: #f1f1f1;
+            cursor: pointer;
+        }
 
-input[type="radio"]{
-  transform:scale(1.2);
-}
+        input[type="radio"] {
+            transform: scale(1.2);
+        }
 
-button{
-  width:100%;
-  padding:15px;
-  font-size:16px;
-  background:#1e88e5;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            background: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-button:hover{
-  background:#1565c0;
-}
+        button:hover {
+            background: #1565c0;
+        }
 
-@media (min-width:600px){
-  .opciones{
-    flex-direction:row;
-    justify-content:space-between;
-  }
-}
-</style>
+        @media (min-width:600px) {
+            .opciones {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-<h1>Evaluación Técnica</h1>
+        <h1>Evaluación Técnica</h1>
 
-<form id="formulario">
+        <form id="formulario">
 
-<div class="card">
-  <input type="text" id="nombre" placeholder="Nombre completo" required style="width:100%;padding:10px;margin-bottom:10px;">
-  <input type="number" id="anioIngreso" placeholder="Año ingreso al polo" required style="width:100%;padding:10px;margin-bottom:10px;">
-  <input type="number" id="nacionales" placeholder="Torneos nacionales" required style="width:100%;padding:10px;margin-bottom:10px;">
-  <input type="number" id="internacionales" placeholder="Torneos internacionales" required style="width:100%;padding:10px;margin-bottom:10px;">
-  <input type="number" id="latinos" placeholder="Latinoamericanos" required style="width:100%;padding:10px;margin-bottom:10px;">
-  <input type="number" id="somos" placeholder="Torneos Somos" required style="width:100%;padding:10px;margin-bottom:10px;">
-  <input type="number" id="wildcard" placeholder="Wild Card / Mundiales" required style="width:100%;padding:10px;margin-bottom:10px;">
-  
-  <p>¿Participas activamente en ligas?</p>
-  <label><input type="radio" name="ligas" value="Si" required> Sí</label>
-  <label><input type="radio" name="ligas" value="No"> No</label>
-</div>
+            <div class="card">
+                <input type="text" id="nombre" placeholder="Nombre completo" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="anioIngreso" placeholder="Año ingreso al polo" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="nacionales" placeholder="Torneos nacionales" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="internacionales" placeholder="Torneos internacionales" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="latinos" placeholder="Latinoamericanos" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="somos" placeholder="Torneos Somos" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="wildcard" placeholder="Wild Card / Mundiales" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
 
-<div id="preguntas"></div>
+                <p>¿Participas activamente en ligas?</p>
+                <label><input type="radio" name="ligas" value="Si" required> Sí</label>
+                <label><input type="radio" name="ligas" value="No"> No</label>
+            </div>
 
-<div class="card">
-  <button type="submit">Enviar Evaluación</button>
-</div>
+            <div id="preguntas"></div>
 
-</form>
+            <div class="card">
+                <button type="submit">Enviar Evaluación</button>
+            </div>
 
-</div>
+        </form>
 
-<script>
+    </div>
 
-const endpoint = "https://script.google.com/macros/s/AKfycbxg_xk5ATPxYYvPxbWiMuCt1yQSmjqsf_QzQRz-syMWeRNcsqAKuy8fNgUpj_NNPtBl/exec";
+    <script>
 
-const preguntas = [
-"Presionar la pelota contra el piso con lado hueco del cabezal (scoop)",
-"Mantener el equilibrio posicionado en lugar específico, bicicleta detenida y mallet bien apoyado en el suelo"
-];
+        const endpoint = "https://script.google.com/macros/s/AKfycbwDRHhc3zYQcChrgW-yTCOnacllHOJ4AEZe-50utsFWh42GkNQ_-HfsZT8i-dkhq2Yr/exec";
 
-const contenedor = document.getElementById("preguntas");
+        const preguntas = [
+            "Presionar la pelota contra el piso con lado hueco del cabezal (scoop)",
+            "Mantener el equilibrio posicionado en lugar específico, bicicleta detenida y mallet bien apoyado en el suelo"
+        ];
 
-preguntas.forEach((texto, index)=>{
-  const numero = index + 1;
-  
-  const card = document.createElement("div");
-  card.className = "card";
-  
-  card.innerHTML = `
+        const contenedor = document.getElementById("preguntas");
+
+        preguntas.forEach((texto, index) => {
+            const numero = index + 1;
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
     <div class="pregunta">${numero}. ${texto}</div>
     <div class="opciones">
       <label><input type="radio" name="p${numero}" value="3" required> Siempre</label>
@@ -136,56 +144,65 @@ preguntas.forEach((texto, index)=>{
       <label><input type="radio" name="p${numero}" value="1"> Nunca</label>
     </div>
   `;
-  
-  contenedor.appendChild(card);
-});
 
-document.getElementById("formulario").addEventListener("submit", async function(e){
-  e.preventDefault();
-  
-  let puntaje = 0;
-  
-  for(let i=1; i<=53; i++){
-    const respuesta = document.querySelector(`input[name="p${i}"]:checked`);
-    puntaje += parseInt(respuesta.value);
-  }
+            contenedor.appendChild(card);
+        });
 
-  let nivel = "";
+        document.getElementById("formulario").addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-  if(puntaje <= 74) nivel="Inicial";
-  else if(puntaje <= 96) nivel="Inicial-Avanzado";
-  else if(puntaje <=118) nivel="Intermedio";
-  else if(puntaje <=140) nivel="Intermedio-Avanzado";
-  else nivel="Avanzado";
+            let puntaje = 0;
 
-  const data = {
-    nombre: document.getElementById("nombre").value,
-    anioIngreso: document.getElementById("anioIngreso").value,
-    nacionales: document.getElementById("nacionales").value,
-    internacionales: document.getElementById("internacionales").value,
-    latinos: document.getElementById("latinos").value,
-    somos: document.getElementById("somos").value,
-    wildcard: document.getElementById("wildcard").value,
-    ligas: document.querySelector('input[name="ligas"]:checked').value,
-    puntaje,
-    nivel
-  };
+            for (let i = 1; i <= 2; i++) {
+                const respuesta = document.querySelector(`input[name="p${i}"]:checked`);
+                puntaje += parseInt(respuesta.value);
+            }
 
-  await fetch(endpoint,{
-  method:"POST",
-  mode:"no-cors",
-  headers:{
-    "Content-Type":"application/json"
-  },
-  body:JSON.stringify(data)
-});
+            let nivel = "";
+
+            if (puntaje <= 74) nivel = "Inicial";
+            else if (puntaje <= 96) nivel = "Inicial-Avanzado";
+            else if (puntaje <= 118) nivel = "Intermedio";
+            else if (puntaje <= 140) nivel = "Intermedio-Avanzado";
+            else nivel = "Avanzado";
+
+            const data = {
+                nombre: document.getElementById("nombre").value,
+                anioIngreso: document.getElementById("anioIngreso").value,
+                nacionales: document.getElementById("nacionales").value,
+                internacionales: document.getElementById("internacionales").value,
+                latinos: document.getElementById("latinos").value,
+                somos: document.getElementById("somos").value,
+                wildcard: document.getElementById("wildcard").value,
+                ligas: document.querySelector('input[name="ligas"]:checked').value,
+                puntaje,
+                nivel
+            };
+
+            const formData = new FormData();
+
+            Object.keys(data).forEach(key => {
+                formData.append(key, data[key]);
+            });
+
+            fetch(endpoint, {
+                method: "POST",
+                body: formData
+            })
+                .then(() => {
+                    alert("Evaluación enviada correctamente.");
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
 
 
-  alert("Evaluación enviada correctamente.");
-  document.getElementById("formulario").reset();
-});
+            alert("Evaluación enviada correctamente.");
+            document.getElementById("formulario").reset();
+        });
 
-</script>
+    </script>
 
 </body>
+
 </html>
