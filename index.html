@@ -268,6 +268,7 @@
 
     <script>
 
+<<<<<<< HEAD
         const endpoint = "https://script.google.com/macros/s/AKfycbyq00TY_2B0Zh9bMVIUv-ksVEInBDaDG6tZaKfx60u4rwNk1udE6R-6lOpi_a_dJ923/exec";
 
         /* =========================================
@@ -362,6 +363,70 @@
            GENERAR PREGUNTAS
         ========================================= */
 
+=======
+        const endpoint = "https://script.google.com/macros/s/AKfycbw3pzGgJZzKmsNn9Vp-TZ2H01zNd2CqaSVwkog80_euM8_Ju2dsLMBm15ISzawt5deh/exec";
+
+        const preguntas = [
+            "Presionar la pelota contra el piso con lado hueco del cabezal (scoop)",
+            "Mantener el equilibrio posicionado en lugar específico, bicicleta detenida y mallet bien apoyado en el suelo",
+            "Fuera de un partido: Bajar mallet al piso mientras la bici esté en movimiento/tocar piso con la mano",
+            "Saltar encalado (o no) con ambas ruedas, repetidamente, girando en el eje de la caja de motor",
+            "Armado, coordinación y dirección de equipo en un partido",
+            "Dar vuelta en círculo con una mano en el manubrio y la otra inicialmente apoyando el mallet",
+            "Nociones avanzadas de posiciones en la cancha",
+            "Pasar la pelota de un lado al otro de la bici utilizando scoop hacia ambos lados",
+            "Llevar la pelota una vuelta completa a la cancha en donde yo la quiero",
+            "Pedalear y frenar idealmente con una mano",
+            "Pases con rueda delantera",
+            "Pivoteo continuo con ambas ruedas",
+            "Dar un pase con el lado largo de la cabeza",
+            "No caerse en situaciones de carrera y frenar bruscamente",
+            "Bajar mallet al piso para tapar una pelota bajo caja de motor en el arco",
+            "Pivoteo en +90° con ambas ruedas",
+            "Recibir un pase por tu lado hábil",
+            "Dar un pase por tu lado hábil",
+            "Dar pases o tiros direccionados",
+            "Bajar mallet para interferir pases",
+            "En movimiento recto: Saltar con ambas ruedas para cambiar dirección",
+            "Bajar mallet para defender el arco y volver a posición",
+            "Hablar de forma táctica para coordinación de equipo",
+            "Conducir la bicicleta con una mano",
+            "Llevar pelota por delante moviendo la bici de lado a lado",
+            "Utilizar scoop dentro de partidos",
+            "Scoop de revés",
+            "Nociones básicas de posicionamiento en la cancha",
+            "Hacer un tiro por tu lado hábil",
+            "Nociones de juego en pared y esquinas",
+            "Utilización de la bicicleta para ganar posición",
+            "Recibir pase, preparar tiro y tirar de primera",
+            "Lectura de partidos",
+            "Pasar la pelota de un lado al otro por caja de motor 2 veces",
+            "Entrar al área y mantener posición de arquero",
+            "Saltar repetidamente moviéndose adelante, atrás y lados",
+            "Buenas salidas en situaciones en pared",
+            "Pases con rueda trasera",
+            "Dar un pase hacia atrás",
+            "Llevar la pelota por ambos lados de la bici",
+            "Scoop sin bicicleta hacia arriba",
+            "Pivotear en 45° con rueda trasera",
+            "Recibir pase, preparar tiro y tirar en 3 movimientos",
+            "Juego con las manos controlando pelotas aéreas",
+            "Pivotear en +45° con rueda delantera",
+            "Acomodar la bicicleta al arco",
+            "Recibir un pase por tu lado no hábil",
+            "Frenar con rueda delantera y levantar rueda trasera",
+            "Recibir pase, preparar tiro y tirar en 2 movimientos",
+            "Pivotear en 90° con rueda trasera",
+            "Tiro al arco desde cualquier parte de la cancha",
+            "Defender 1v1 cerca del área por ambos lados",
+            "Scoop básico con bicicleta hacia arriba"
+        ];
+
+        const contenedor = document.getElementById("preguntas");
+
+
+        // 🔥 Generar preguntas dinámicamente
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
         preguntas.forEach((texto, index) => {
 
             const numero = index + 1;
@@ -391,6 +456,10 @@
 
                     actualizarProgreso();
 
+<<<<<<< HEAD
+=======
+                    // 🔥 Guardar respuesta pregunta
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
                     localStorage.setItem(this.name, this.value);
 
                     const cardActual = this.closest(".card");
@@ -422,10 +491,14 @@
         });
 
 
+<<<<<<< HEAD
         /* =========================================
            GUARDAR CAMPOS
         ========================================= */
 
+=======
+        // 🔥 GUARDAR CAMPOS INFORMATIVOS AUTOMÁTICAMENTE
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
         const camposInfo = [
             "nombre",
             "anioIngreso",
@@ -445,6 +518,10 @@
             }
         });
 
+<<<<<<< HEAD
+=======
+        // Guardar radio ligas
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
         document.querySelectorAll('input[name="ligas"]').forEach(radio => {
             radio.addEventListener("change", function () {
                 localStorage.setItem("ligas", this.value);
@@ -452,10 +529,14 @@
         });
 
 
+<<<<<<< HEAD
         /* =========================================
            RESTAURAR PROGRESO
         ========================================= */
 
+=======
+        // 🔥 RESTAURAR PROGRESO PREGUNTAS
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
         preguntas.forEach((_, index) => {
 
             const numero = index + 1;
@@ -484,6 +565,10 @@
         });
 
 
+<<<<<<< HEAD
+=======
+        // 🔥 RESTAURAR CAMPOS INFORMATIVOS
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
         camposInfo.forEach(id => {
             const valor = localStorage.getItem(id);
             if (valor) {
@@ -492,12 +577,17 @@
             }
         });
 
+<<<<<<< HEAD
+=======
+        // Restaurar ligas
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
         const ligasGuardado = localStorage.getItem("ligas");
         if (ligasGuardado) {
             const radio = document.querySelector(`input[name="ligas"][value="${ligasGuardado}"]`);
             if (radio) radio.checked = true;
         }
 
+<<<<<<< HEAD
         actualizarProgreso();
 
 
@@ -505,6 +595,14 @@
            BARRA PROGRESO
         ========================================= */
 
+=======
+
+        // 🔥 Actualizar barra después de restaurar
+        actualizarProgreso();
+
+
+        // 🔥 Barra de progreso
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
         function actualizarProgreso() {
 
             let respondidas = 0;
@@ -542,16 +640,21 @@
         }
 
 
+<<<<<<< HEAD
         /* =========================================
            ENVÍO
         ========================================= */
 
+=======
+        // 🔥 Envío del formulario
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
         document.getElementById("formulario").addEventListener("submit", function (e) {
 
             e.preventDefault();
 
             let puntaje = 0;
 
+<<<<<<< HEAD
             const respuestas = {};
 
             for (let i = 1; i <= preguntas.length; i++) {
@@ -564,6 +667,11 @@
                 } else {
                     respuestas["p" + i] = "";
                 }
+=======
+            for (let i = 1; i <= preguntas.length; i++) {
+                const respuesta = document.querySelector(`input[name="p${i}"]:checked`);
+                puntaje += parseInt(respuesta.value);
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
             }
 
             let nivel = "";
@@ -574,10 +682,13 @@
             else if (puntaje <= 140) nivel = "Intermedio(+)";
             else nivel = "Avanzado";
 
+<<<<<<< HEAD
 
             const tiempoTotalSegundos = Math.round((Date.now() - tiempoInicio) / 1000);
 
 
+=======
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
             const data = {
                 nombre: document.getElementById("nombre").value,
                 anioIngreso: document.getElementById("anioIngreso").value,
@@ -588,9 +699,13 @@
                 wildcard: document.getElementById("wildcard").value,
                 ligas: document.querySelector('input[name="ligas"]:checked').value,
                 puntaje,
+<<<<<<< HEAD
                 nivel,
                 tiempo: tiempoTotalSegundos,
                 ...respuestas
+=======
+                nivel
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
             };
 
             const formData = new FormData();
@@ -606,6 +721,10 @@
             })
                 .then(() => {
 
+<<<<<<< HEAD
+=======
+                    // 🔥 LIMPIAR TODO EL PROGRESO
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
                     localStorage.clear();
 
                     const mensaje = document.getElementById("mensajeExito");
@@ -636,6 +755,11 @@
 
     </script>
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ee8fc75336a1465aa16cbdfcbaab1744b0ff2288
 </body>
 
 </html>
