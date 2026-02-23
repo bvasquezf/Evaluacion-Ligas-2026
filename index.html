@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Club</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .pregunta {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .opciones label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 6px;
+            background: #f1f1f1;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            background: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1565c0;
+        }
+
+        @media (min-width:600px) {
+            .opciones {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #4caf50;
+            transition: width 0.3s ease;
+        }
+
+        .mensaje-exito {
+            display: none;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-wrapper {
+            position: sticky;
+            top: 0;
+            background: #f4f6f9;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #4caf50;
+            transition: width 0.3s ease;
+        }
+
+        #progressText {
+            text-align: center;
+            font-weight: bold;
+            margin: 5px 0 0 0;
+        }
+
+        .progress-completo {
+            animation: pulseGreen 0.6s ease-in-out;
+            background: #2e7d32 !important;
+        }
+
+        @keyframes pulseGreen {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .card.completada {
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .respuesta-final {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-top: 5px;
+        }
+
+        .info-alternativas {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .info-alternativas h3 {
+            margin-top: 0;
+            color: #1e88e5;
+        }
+
+        .info-alternativas ul {
+            padding-left: 20px;
+            margin: 10px 0 0 0;
+        }
+
+        .info-alternativas li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Evaluación Técnica</h1>
+
+        <div id="mensajeExito" class="mensaje-exito">
+            ✅ Evaluación enviada correctamente
+        </div>
+
+        <div class="progress-wrapper">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p id="progressText">0% completado</p>
+            <p id="preguntaActual"></p>
+        </div>
+
+        <form id="formulario">
+
+            <div class="card">
+                <input type="text" id="nombre" placeholder="Nombre completo" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="anioIngreso" placeholder="Año ingreso al polo" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="nacionales" placeholder="Torneos nacionales" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="internacionales" placeholder="Torneos internacionales" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="latinos" placeholder="Latinoamericanos" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="somos" placeholder="Torneos Somos" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+                <input type="number" id="wildcard" placeholder="Wild Card / Mundiales" required
+                    style="width:100%;padding:10px;margin-bottom:10px;">
+
+                <p>¿Participas activamente en ligas?</p>
+                <label><input type="radio" name="ligas" value="Si" required> Sí</label>
+                <label><input type="radio" name="ligas" value="No"> No</label>
+            </div>
+
+            <div class="info-alternativas">
+                <h3>Instrucciones</h3>
+                <p>Marca la alternativa que más se acerque a tu juego, de acuerdo a las siguientes descripciones:</p>
+
+                <ul>
+                    <li><strong>SIEMPRE:</strong> 8 a 10 de 10 veces puedo hacerlo bien sin fallas.</li>
+                    <li><strong>A VECES:</strong> 4 a 6 de 10 veces puedo hacerlo, pero no siempre me sale bien.</li>
+                    <li><strong>NUNCA:</strong> Menos de 3 de 10 veces me sale bien, en general me ayuda bastante la
+                        suerte.</li>
+                </ul>
+            </div>
+
+
+            <div id="preguntas"></div>
+
+            <div class="card">
+                <button type="submit" id="btnEnviar" disabled>Enviar Evaluación</button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        const endpoint = "https://script.google.com/macros/s/AKfycbyq00TY_2B0Zh9bMVIUv-ksVEInBDaDG6tZaKfx60u4rwNk1udE6R-6lOpi_a_dJ923/exec";
+
+        /* =========================================
+           ⏱ INICIO TIMER OCULTO
+        ========================================= */
+
+        let tiempoInicio = localStorage.getItem("inicioTest");
+
+        if (!tiempoInicio) {
+            tiempoInicio = Date.now();
+            localStorage.setItem("inicioTest", tiempoInicio);
+        } else {
+            tiempoInicio = parseInt(tiempoInicio);
+        }
+
+        /* ========================================= */
+
+        const preguntas = [
+            "Gestión de presión: ¿Eres capaz de mantener la calma y buscar un pase seguro cuando te encuentras presionado por dos oponentes en una esquina?",
+            "Priorización de amenazas: Al defender un contragolpe, ¿identificas correctamente quién es el jugador más peligroso (el que lleva la bola o el que busca el pase al segundo palo)?",
+            "Adaptabilidad táctica: Si la estrategia inicial no funciona contra un equipo específico, ¿tienes la capacidad de proponer o adoptar un cambio de rol a mitad del partido?",
+            "Visión periférica: ¿Puedes ubicar la posición de tus compañeros y rivales sin dejar de mirar la pelota directamente?",
+            "Cálculo de trayectorias: ¿Eres capaz de anticipar el rebote de la pelota en las paredes o esquinas para ganar la posición antes que el rival?",
+            "Gestión del \"Timeout\" personal: ¿Reconoces el momento exacto en que debes bajar el ritmo para permitir que tu equipo se reorganice defensivamente?",
+            "Detección de patrones: ¿Logras identificar rápidamente el punto débil del rival (ej. un jugador que no defiende bien el lado del freno o que se cansa rápido)?",
+            "Conciencia del cronómetro: ¿Ajustas tu toma de riesgos dependiendo del tiempo restante y el marcador (ej. posesiones más largas si vas ganando por uno al final)?",
+            "Lectura de portería: ¿Analizas los hábitos del arquero rival (ej. si suele salir mucho o si deja libre el primer palo) antes de ejecutar un tiro?",
+            "Síntesis comunicativa: ¿Logras dar instrucciones precisas de máximo dos palabras (ej. \"¡Sube!\", \"¡Cambio!\") en medio de la intensidad del juego?",
+            "Inteligencia emocional: ¿Eres capaz de dar instrucciones constructivas a un compañero que acaba de cometer un error sin romper la dinámica del equipo?",
+            "Liderazgo y Estrategia: ¿Te sientes capaz de asumir el armado, la coordinación y la dirección de tu equipo durante un partido de alta intensidad?",
+            "Roles Específicos: ¿Posees nociones avanzadas sobre las responsabilidades tácticas de cada posición (delantero, medio y arquero) y sabes cuándo rotar entre ellas?",
+            "Comunicación Operativa: ¿Utilizas un lenguaje táctico fluido para coordinar la ubicación de tus compañeros (ej. cantar \"atrás\", \"lado\", \"orilla\") durante el juego?",
+            "Dominio del Espacio: ¿Tienes claras las nociones básicas de posicionamiento (delante, atrás, perímetro, medio) para mantener el orden estructural del equipo?",
+            "Resolución en Zonas Críticas: ¿Dominas el juego en paredes y esquinas? (¿Sabes cómo salir de situaciones de presión extrema sin perder la posesión?).",
+            "Análisis Táctico (Lectura): ¿Qué tan desarrollada consideras tu \"lectura de partido\", tanto para ajustar la estrategia mientras juegas como para analizar errores desde fuera?",
+            "Contacto Legal: Al disputar una posición, ¿realiza el contacto físico exclusivamente de hombro a hombro, manteniendo el brazo pegado al cuerpo y sin usar los codos?",
+            "Estabilidad en Choque: ¿Logra absorber el contacto físico de un oponente y mantener la trayectoria de la bicicleta sin perder el equilibrio o poner un pie en el suelo (dab)?",
+            "¿Puedes conducir la bicicleta con seguridad usando solo una mano en el manubrio?",
+            "¿Logras dar vueltas en círculo con una sola mano, primero apoyando el mallet y luego sin apoyarlo?",
+            "¿Frenas con la rueda delantera a velocidad moderada levantando la trasera con control?",
+            "¿Mantienes el equilibrio en un punto fijo con la bicicleta detenida y el mallet apoyado?",
+            "¿Controlas la bici sin caerte en carreras de velocidad o ante frenadas bruscas?",
+            "¿Pedaleas y frenas con fluidez utilizando una sola mano?",
+            "¿Logras saltar (encalado o no) con ambas ruedas repetidamente girando sobre el eje?",
+            "¿Saltas con ambas ruedas moviéndote hacia adelante, atrás y a los lados?",
+            "¿Utilizas el cuerpo de la bicicleta para ganar posición o quitar pelotas a un rival?",
+            "¿Realizas pivoteos de +45° con la rueda delantera en ambos sentidos?",
+            "¿Realizas pivoteos de 45° con la rueda trasera hacia tu lado hábil?",
+            "¿Realizas pivoteos de 90° con la rueda trasera hacia tu lado hábil?",
+            "¿Logras hacer pivoteos de +90° con ambas ruedas (delantera ambos sentidos, trasera lado hábil)?",
+            "¿Ejecutas pivoteos continuos combinando ambas ruedas (trasera + delantera)?",
+            "¿Llevas la pelota con control por ambos lados de la bicicleta?",
+            "¿Puedes dar una vuelta completa a la cancha llevando la pelota por tu lado hábil?",
+            "¿Llevas la pelota por delante de la bici moviéndola de lado a lado usándola como eje?",
+            "¿Pasas la pelota de un lado al otro por la zona de la caja de motor (2 veces por lado)?",
+            "¿Pasas la pelota de un lado al otro utilizando la técnica de scoop?",
+            "¿Realizas pases precisos utilizando la rueda delantera?",
+            "¿Realizas pases precisos utilizando la rueda trasera?",
+            "¿Recibes pases con éxito por tu lado hábil?",
+            "¿Recibes pases con éxito por tu lado no hábil (revés)?",
+            "¿Das pases hacia atrás con intención y dirección?",
+            "¿Das pases por tu lado hábil (ya sea al costado o hacia adelante)?",
+            "¿Das pases utilizando el lado largo del cabezal del mallet?",
+            "¿Tus pases y tiros van dirigidos exactamente hacia donde quieres?",
+            "¿Presionas la pelota contra el piso con el lado hueco del cabezal (scoop)?",
+            "¿Haces tiros efectivos al arco por tu lado hábil?",
+            "¿Tiras al arco con potencia desde cualquier parte de la cancha?",
+            "¿Defines con éxito en situaciones de 1v1 (de derecho y revés) por ambos lados?",
+            "¿Recibes un pase y tiras al arco de primera (en 1 solo movimiento)?",
+            "¿Recibes, preparas y tiras al arco en 2 movimientos?",
+            "¿Recibes, preparas y tiras al arco en 3 movimientos?",
+            "¿Realizas un scoop básico con la bici (parábola simple hacia arriba/adelante)?",
+            "¿Realizas un scoop básico sin estar sobre la bicicleta?",
+            "¿Logras realizar la técnica de scoop de revés?",
+            "¿Ejecutas un scoop avanzado reteniendo la pelota y cambiando de dirección (máx. 3) antes de pasar?",
+            "¿Utilizas el scoop dentro de un partido para dar pases o librarte de defensas?",
+            "¿Te acomodas rápidamente al arco para defender?",
+            "¿Entras al área, te posicionas como arquero y mantienes la posición correctamente?",
+            "¿Bajas el mallet paralelo al piso para defender y vuelves a la posición de arquero sin caerte?",
+            "¿Bajar el mallet al piso (bajo la caja de motor) para tapar pelotas bajas en el arco?",
+            "¿Bajas el mallet con precisión para interferir o cortar pases enemigos?",
+            "¿Usas las manos para desviar pelotas aéreas de forma consciente (mallet bajo el manubrio)?",
+            "¿Logras buenas salidas controladas en situaciones de pared y esquinas?",
+            "¿Bajas el mallet al piso o tocas el suelo con la mano mientras la bici sigue en movimiento?"
+        ];
+
+
+        const contenedor = document.getElementById("preguntas");
+
+
+        /* =========================================
+           GENERAR PREGUNTAS
+        ========================================= */
+
+        preguntas.forEach((texto, index) => {
+
+            const numero = index + 1;
+
+            if (numero % 10 === 1) {
+                const separador = document.createElement("div");
+                separador.innerHTML = `<h3 style="margin-top:30px;">Bloque ${Math.ceil(numero / 10)}</h3>`;
+                contenedor.appendChild(separador);
+            }
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
+        <div class="pregunta">${numero}. ${texto}</div>
+        <div class="opciones">
+            <label><input type="radio" name="p${numero}" value="3" required> Siempre</label>
+            <label><input type="radio" name="p${numero}" value="2"> A veces</label>
+            <label><input type="radio" name="p${numero}" value="1"> Nunca</label>
+        </div>
+    `;
+
+            contenedor.appendChild(card);
+
+            card.querySelectorAll("input[type='radio']").forEach(radio => {
+                radio.addEventListener("change", function () {
+
+                    actualizarProgreso();
+
+                    localStorage.setItem(this.name, this.value);
+
+                    const cardActual = this.closest(".card");
+
+                    if (cardActual.classList.contains("completada")) return;
+
+                    const opciones = cardActual.querySelector(".opciones");
+                    opciones.style.display = "none";
+
+                    const respuestaFinal = document.createElement("div");
+                    respuestaFinal.className = "respuesta-final";
+                    respuestaFinal.innerText = "Respuesta: " + this.parentElement.innerText;
+
+                    cardActual.appendChild(respuestaFinal);
+                    cardActual.classList.add("completada");
+
+                    const numeroActual = parseInt(this.name.replace("p", ""));
+                    const siguiente = document.querySelector(`input[name="p${numeroActual + 1}"]`);
+
+                    if (siguiente) {
+                        siguiente.closest(".card").scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    }
+                });
+            });
+
+        });
+
+
+        /* =========================================
+           GUARDAR CAMPOS
+        ========================================= */
+
+        const camposInfo = [
+            "nombre",
+            "anioIngreso",
+            "nacionales",
+            "internacionales",
+            "latinos",
+            "somos",
+            "wildcard"
+        ];
+
+        camposInfo.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener("input", function () {
+                    localStorage.setItem(id, this.value);
+                });
+            }
+        });
+
+        document.querySelectorAll('input[name="ligas"]').forEach(radio => {
+            radio.addEventListener("change", function () {
+                localStorage.setItem("ligas", this.value);
+            });
+        });
+
+
+        /* =========================================
+           RESTAURAR PROGRESO
+        ========================================= */
+
+        preguntas.forEach((_, index) => {
+
+            const numero = index + 1;
+            const valorGuardado = localStorage.getItem("p" + numero);
+
+            if (valorGuardado) {
+
+                const radio = document.querySelector(`input[name="p${numero}"][value="${valorGuardado}"]`);
+
+                if (radio) {
+
+                    radio.checked = true;
+
+                    const cardActual = radio.closest(".card");
+                    const opciones = cardActual.querySelector(".opciones");
+                    opciones.style.display = "none";
+
+                    const respuestaFinal = document.createElement("div");
+                    respuestaFinal.className = "respuesta-final";
+                    respuestaFinal.innerText = "Respuesta: " + radio.parentElement.innerText;
+
+                    cardActual.appendChild(respuestaFinal);
+                    cardActual.classList.add("completada");
+                }
+            }
+        });
+
+
+        camposInfo.forEach(id => {
+            const valor = localStorage.getItem(id);
+            if (valor) {
+                const input = document.getElementById(id);
+                if (input) input.value = valor;
+            }
+        });
+
+        const ligasGuardado = localStorage.getItem("ligas");
+        if (ligasGuardado) {
+            const radio = document.querySelector(`input[name="ligas"][value="${ligasGuardado}"]`);
+            if (radio) radio.checked = true;
+        }
+
+        actualizarProgreso();
+
+
+        /* =========================================
+           BARRA PROGRESO
+        ========================================= */
+
+        function actualizarProgreso() {
+
+            let respondidas = 0;
+
+            for (let i = 1; i <= preguntas.length; i++) {
+                const seleccion = document.querySelector(`input[name="p${i}"]:checked`);
+                if (seleccion) respondidas++;
+            }
+
+            const porcentaje = Math.round((respondidas / preguntas.length) * 100);
+
+            const barra = document.getElementById("progressBar");
+            const texto = document.getElementById("progressText");
+            const btn = document.getElementById("btnEnviar");
+
+            if (barra) barra.style.width = porcentaje + "%";
+            if (texto) texto.innerText = porcentaje + "% completado";
+
+            if (porcentaje === 100) {
+                btn.disabled = false;
+                barra.style.background = "#2e7d32";
+            } else {
+                btn.disabled = true;
+                barra.style.background = "#4caf50";
+            }
+
+            for (let i = preguntas.length; i >= 1; i--) {
+                const seleccion = document.querySelector(`input[name="p${i}"]:checked`);
+                if (seleccion) {
+                    document.getElementById("preguntaActual").innerText =
+                        "Última respondida: " + i + " de " + preguntas.length;
+                    break;
+                }
+            }
+        }
+
+
+        /* =========================================
+           ENVÍO
+        ========================================= */
+
+        document.getElementById("formulario").addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            let puntaje = 0;
+
+            const respuestas = {};
+
+            for (let i = 1; i <= preguntas.length; i++) {
+
+                const respuesta = document.querySelector(`input[name="p${i}"]:checked`);
+
+                if (respuesta) {
+                    puntaje += parseInt(respuesta.value);
+                    respuestas["p" + i] = respuesta.value;
+                } else {
+                    respuestas["p" + i] = "";
+                }
+            }
+
+            let nivel = "";
+
+            if (puntaje <= 74) nivel = "Inicial";
+            else if (puntaje <= 96) nivel = "Inicial(+)";
+            else if (puntaje <= 118) nivel = "Intermedio";
+            else if (puntaje <= 140) nivel = "Intermedio(+)";
+            else nivel = "Avanzado";
+
+
+            const tiempoTotalSegundos = Math.round((Date.now() - tiempoInicio) / 1000);
+
+
+            const data = {
+                nombre: document.getElementById("nombre").value,
+                anioIngreso: document.getElementById("anioIngreso").value,
+                nacionales: document.getElementById("nacionales").value,
+                internacionales: document.getElementById("internacionales").value,
+                latinos: document.getElementById("latinos").value,
+                somos: document.getElementById("somos").value,
+                wildcard: document.getElementById("wildcard").value,
+                ligas: document.querySelector('input[name="ligas"]:checked').value,
+                puntaje,
+                nivel,
+                tiempo: tiempoTotalSegundos,
+                ...respuestas
+            };
+
+            const formData = new FormData();
+            Object.keys(data).forEach(key => formData.append(key, data[key]));
+
+            const btn = document.getElementById("btnEnviar");
+            btn.disabled = true;
+            btn.innerText = "Enviando...";
+
+            fetch(endpoint, {
+                method: "POST",
+                body: formData
+            })
+                .then(() => {
+
+                    localStorage.clear();
+
+                    const mensaje = document.getElementById("mensajeExito");
+                    mensaje.style.display = "block";
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                    document.getElementById("formulario").reset();
+                    actualizarProgreso();
+
+                    btn.innerText = "Enviar Evaluación";
+
+                    setTimeout(() => {
+                        mensaje.style.display = "none";
+                    }, 4000);
+
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    btn.disabled = false;
+                    btn.innerText = "Enviar Evaluación";
+                });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
