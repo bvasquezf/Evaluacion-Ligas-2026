@@ -199,6 +199,17 @@
         .info-alternativas li {
             margin-bottom: 6px;
         }
+
+        .btn-editar {
+            margin-top: 8px;
+            padding: 6px 10px;
+            border: none;
+            background: #ff9800;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -269,6 +280,25 @@
     <script>
 
         const endpoint = "https://script.google.com/macros/s/AKfycbyq00TY_2B0Zh9bMVIUv-ksVEInBDaDG6tZaKfx60u4rwNk1udE6R-6lOpi_a_dJ923/exec";
+        /* =========================================
+           LIMITE DE EDICIONES
+        ========================================= */
+
+        const MAX_EDICIONES = 10;
+
+        let edicionesUsadas = parseInt(localStorage.getItem("edicionesUsadas")) || 0;
+
+        function registrarEdicion() {
+            edicionesUsadas++;
+            localStorage.setItem("edicionesUsadas", edicionesUsadas);
+
+            // cuando llega al limite eliminamos todos los botones editar
+            if (edicionesUsadas >= MAX_EDICIONES) {
+                document.querySelectorAll(".btn-editar").forEach(b => b.remove());
+            }
+        }
+
+
 
         /* =========================================
            ⏱ INICIO TIMER OCULTO
@@ -293,7 +323,7 @@
             "Cálculo de trayectorias: ¿Eres capaz de anticipar el rebote de la pelota en las paredes o esquinas para ganar la posición antes que el rival?",
             "Gestión del \"Timeout\" personal: ¿Reconoces el momento exacto en que debes bajar el ritmo para permitir que tu equipo se reorganice defensivamente?",
             "Detección de patrones: ¿Logras identificar rápidamente el punto débil del rival (ej. un jugador que no defiende bien el lado del freno o que se cansa rápido)?",
-            "Conciencia del cronómetro: ¿Ajustas tu toma de riesgos dependiendo del tiempo restante y el marcador (ej. posesiones más largas si vas ganando por uno al final)?",
+            /*"Conciencia del cronómetro: ¿Ajustas tu toma de riesgos dependiendo del tiempo restante y el marcador (ej. posesiones más largas si vas ganando por uno al final)?",
             "Lectura de portería: ¿Analizas los hábitos del arquero rival (ej. si suele salir mucho o si deja libre el primer palo) antes de ejecutar un tiro?",
             "Síntesis comunicativa: ¿Logras dar instrucciones precisas de máximo dos palabras (ej. \"¡Sube!\", \"¡Cambio!\") en medio de la intensidad del juego?",
             "Inteligencia emocional: ¿Eres capaz de dar instrucciones constructivas a un compañero que acaba de cometer un error sin romper la dinámica del equipo?",
@@ -351,26 +381,47 @@
             "¿Bajas el mallet con precisión para interferir o cortar pases enemigos?",
             "¿Usas las manos para desviar pelotas aéreas de forma consciente (mallet bajo el manubrio)?",
             "¿Logras buenas salidas controladas en situaciones de pared y esquinas?",
-            "¿Bajas el mallet al piso o tocas el suelo con la mano mientras la bici sigue en movimiento?"
+            "¿Bajas el mallet al piso o tocas el suelo con la mano mientras la bici sigue en movimiento?"*/
         ];
 
+        /* =========================================
+           ORDEN ALEATORIO PERO FIJO DURANTE EL TEST
+        ========================================= */
+
+        function mezclarArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        let ordenPreguntas = JSON.parse(localStorage.getItem("ordenPreguntas"));
+
+        if (!ordenPreguntas || ordenPreguntas.length !== preguntas.length) {
+
+            ordenPreguntas = Array.from({ length: preguntas.length }, (_, i) => i);
+
+            mezclarArray(ordenPreguntas);
+
+            localStorage.setItem("ordenPreguntas", JSON.stringify(ordenPreguntas));
+        }
+
+        const preguntasMezcladas = ordenPreguntas.map(i => preguntas[i]);
+
+
+        /* =========================================
+           CONTENEDOR
+        ========================================= */
 
         const contenedor = document.getElementById("preguntas");
-
 
         /* =========================================
            GENERAR PREGUNTAS
         ========================================= */
 
-        preguntas.forEach((texto, index) => {
+        preguntasMezcladas.forEach((texto, index) => {
 
             const numero = index + 1;
-
-            if (numero % 10 === 1) {
-                const separador = document.createElement("div");
-                separador.innerHTML = `<h3 style="margin-top:30px;">Bloque ${Math.ceil(numero / 10)}</h3>`;
-                contenedor.appendChild(separador);
-            }
 
             const card = document.createElement("div");
             card.className = "card";
@@ -386,8 +437,33 @@
 
             contenedor.appendChild(card);
 
+
+            /* EVENTOS DE RESPUESTA */
+
             card.querySelectorAll("input[type='radio']").forEach(radio => {
+
                 radio.addEventListener("change", function () {
+
+                    const nombrePregunta = this.name;
+                    const valorAnterior = localStorage.getItem(nombrePregunta);
+
+                    if (valorAnterior && valorAnterior !== this.value) {
+
+                        if (edicionesUsadas >= MAX_EDICIONES) {
+
+                            alert("Ya alcanzaste el máximo de cambios permitidos.");
+
+                            const radioAnterior = document.querySelector(
+                                `input[name="${nombrePregunta}"][value="${valorAnterior}"]`
+                            );
+
+                            if (radioAnterior) radioAnterior.checked = true;
+
+                            return;
+                        }
+
+                        registrarEdicion();
+                    }
 
                     actualizarProgreso();
 
@@ -404,7 +480,39 @@
                     respuestaFinal.className = "respuesta-final";
                     respuestaFinal.innerText = "Respuesta: " + this.parentElement.innerText;
 
+                    let btnEditar = null;
+
+                    if (edicionesUsadas < MAX_EDICIONES) {
+
+                        btnEditar = document.createElement("button");
+                        btnEditar.innerText = "Editar";
+                        btnEditar.className = "btn-editar";
+
+                        btnEditar.addEventListener("click", function () {
+
+                            if (edicionesUsadas >= MAX_EDICIONES) {
+                                alert("Ya alcanzaste el máximo de cambios permitidos.");
+                                return;
+                            }
+
+                            registrarEdicion();
+
+                            const opciones = cardActual.querySelector(".opciones");
+                            opciones.style.display = "block";
+
+                            respuestaFinal.remove();
+                            btnEditar.remove();
+
+                            cardActual.classList.remove("completada");
+                        });
+                    }
+
                     cardActual.appendChild(respuestaFinal);
+
+                    if (btnEditar) {
+                        cardActual.appendChild(btnEditar);
+                    }
+
                     cardActual.classList.add("completada");
 
                     const numeroActual = parseInt(this.name.replace("p", ""));
@@ -416,7 +524,9 @@
                             block: "center"
                         });
                     }
+
                 });
+
             });
 
         });
@@ -456,7 +566,7 @@
            RESTAURAR PROGRESO
         ========================================= */
 
-        preguntas.forEach((_, index) => {
+        preguntasMezcladas.forEach((_, index) => {
 
             const numero = index + 1;
             const valorGuardado = localStorage.getItem("p" + numero);
@@ -479,6 +589,34 @@
 
                     cardActual.appendChild(respuestaFinal);
                     cardActual.classList.add("completada");
+
+                    if (edicionesUsadas < MAX_EDICIONES) {
+
+                        const btnEditar = document.createElement("button");
+                        btnEditar.innerText = "Editar";
+                        btnEditar.className = "btn-editar";
+
+                        btnEditar.addEventListener("click", function () {
+
+                            if (edicionesUsadas >= MAX_EDICIONES) {
+                                alert("Ya alcanzaste el máximo de cambios permitidos.");
+                                return;
+                            }
+
+                            registrarEdicion();
+
+                            const opciones = cardActual.querySelector(".opciones");
+                            opciones.style.display = "block";
+
+                            respuestaFinal.remove();
+                            btnEditar.remove();
+
+                            cardActual.classList.remove("completada");
+                        });
+
+                        cardActual.appendChild(btnEditar);
+                    }
+
                 }
             }
         });
@@ -577,6 +715,15 @@
 
             const tiempoTotalSegundos = Math.round((Date.now() - tiempoInicio) / 1000);
 
+            const horas = Math.floor(tiempoTotalSegundos / 3600);
+            const minutos = Math.floor((tiempoTotalSegundos % 3600) / 60);
+            const segundos = tiempoTotalSegundos % 60;
+
+            const tiempoFormateado =
+                `${horas.toString().padStart(2, "0")}:` +
+                `${minutos.toString().padStart(2, "0")}:` +
+                `${segundos.toString().padStart(2, "0")}`;
+
 
             const data = {
                 nombre: document.getElementById("nombre").value,
@@ -589,7 +736,7 @@
                 ligas: document.querySelector('input[name="ligas"]:checked').value,
                 puntaje,
                 nivel,
-                tiempo: tiempoTotalSegundos,
+                tiempo: tiempoFormateado,
                 ...respuestas
             };
 
@@ -608,6 +755,7 @@
 
                     localStorage.clear();
 
+
                     const mensaje = document.getElementById("mensajeExito");
                     mensaje.style.display = "block";
 
@@ -616,14 +764,9 @@
                         behavior: "smooth"
                     });
 
-                    document.getElementById("formulario").reset();
-                    actualizarProgreso();
-
-                    btn.innerText = "Enviar Evaluación";
-
                     setTimeout(() => {
-                        mensaje.style.display = "none";
-                    }, 4000);
+                        location.reload();
+                    }, 1200);
 
                 })
                 .catch(error => {
