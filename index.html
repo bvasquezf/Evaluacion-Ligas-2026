@@ -476,8 +476,43 @@
 
                 card.querySelectorAll("input").forEach(radio => {
                     radio.addEventListener("change", function () {
+
+                        const respuestaAnterior = localStorage.getItem("p" + numero);
+
+                        // detectar edición
+                        if (respuestaAnterior && respuestaAnterior !== this.value) {
+
+                            if (edicionesUsadas >= MAX_EDICIONES) {
+
+                                alert("⚠️ Has alcanzado el límite de ediciones permitido.");
+
+                                const anterior = card.querySelector(`input[value="${respuestaAnterior}"]`);
+                                if (anterior) anterior.checked = true;
+
+                                return;
+
+                            }
+
+                            registrarEdicion();
+                        }
+
                         localStorage.setItem("p" + numero, this.value);
                         actualizarProgreso();
+
+                        // auto scroll a la siguiente pregunta
+                        setTimeout(() => {
+
+                            const siguiente = card.nextElementSibling;
+
+                            if (siguiente) {
+                                siguiente.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "center"
+                                });
+                            }
+
+                        }, 250);
+
                     });
                 });
 
@@ -586,6 +621,20 @@ style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
 
         }
 
+        function formatearTiempo(segundos) {
+
+            const horas = Math.floor(segundos / 3600);
+            const minutos = Math.floor((segundos % 3600) / 60);
+            const seg = segundos % 60;
+
+            return [
+                horas.toString().padStart(2, "0"),
+                minutos.toString().padStart(2, "0"),
+                seg.toString().padStart(2, "0")
+            ].join(":");
+
+        }
+
         /* ENVIO */
 
         document.getElementById("formulario").addEventListener("submit", function (e) {
@@ -617,6 +666,7 @@ style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
             else nivel = "Avanzado";
 
             const tiempoTotalSegundos = Math.round((Date.now() - tiempoInicio) / 1000);
+            const tiempoFormateado = formatearTiempo(tiempoTotalSegundos);
 
             const data = {
 
@@ -635,7 +685,7 @@ style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
                 puntaje,
                 nivel,
 
-                tiempo: tiempoTotalSegundos,
+                tiempo: tiempoFormateado,
 
                 ...respuestas
 
