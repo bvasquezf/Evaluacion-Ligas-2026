@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>Evaluación Club</title>
 
     <style>
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: #f4f6f9;
         }
 
@@ -211,47 +213,127 @@
             font-size: 12px;
         }
     </style>
+
 </head>
 
-<body>
+<body class="bg-slate-100 flex justify-center py-10">
 
-    <div class="container">
+    <div class="w-full max-w-3xl bg-white shadow-xl rounded-xl p-8">
 
-        <h1>Evaluación Técnica</h1>
+        <h1 class="text-2xl font-bold text-center mb-6">
+            Evaluación Nivel Ligas 2026
+        </h1>
 
         <div id="mensajeExito" class="mensaje-exito">
             ✅ Evaluación enviada correctamente
         </div>
 
         <div class="progress-wrapper">
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
+            <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                <div id="progressBar" class="bg-blue-500 h-4 rounded-full transition-all"></div>
             </div>
-            <p id="progressText">0% completado</p>
-            <p id="preguntaActual"></p>
+
+            <p id="progressText" class="text-sm text-gray-600"></p>
         </div>
 
         <form id="formulario">
 
-            <div class="card">
-                <input type="text" id="nombre" placeholder="Nombre completo" required
-                    style="width:100%;padding:10px;margin-bottom:10px;">
-                <input type="number" id="anioIngreso" placeholder="Año ingreso al polo" required
-                    style="width:100%;padding:10px;margin-bottom:10px;">
-                <input type="number" id="nacionales" placeholder="Torneos nacionales" required
-                    style="width:100%;padding:10px;margin-bottom:10px;">
-                <input type="number" id="internacionales" placeholder="Torneos internacionales" required
-                    style="width:100%;padding:10px;margin-bottom:10px;">
-                <input type="number" id="latinos" placeholder="Latinoamericanos" required
-                    style="width:100%;padding:10px;margin-bottom:10px;">
-                <input type="number" id="somos" placeholder="Torneos Somos" required
-                    style="width:100%;padding:10px;margin-bottom:10px;">
-                <input type="number" id="wildcard" placeholder="Wild Card / Mundiales" required
-                    style="width:100%;padding:10px;margin-bottom:10px;">
+            <div class="bg-white shadow-md rounded-xl p-6 mb-6 space-y-4">
+                <h2 class="text-lg font-bold mb-4">
+                    Datos del jugador
+                </h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Nombre
+                        </label>
 
-                <p>¿Participas activamente en ligas?</p>
-                <label><input type="radio" name="ligas" value="Si" required> Sí</label>
-                <label><input type="radio" name="ligas" value="No"> No</label>
+                        <input id="nombre" type="text" placeholder="Ingresa tu nombre"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Año de ingreso
+                        </label>
+
+                        <input id="anioIngreso" type="number" placeholder="Ej: 2021"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Torneos nacionales jugados
+                        </label>
+
+                        <input id="nacionales" type="number" placeholder="0"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Torneos internacionales jugados
+                        </label>
+
+                        <input id="internacionales" type="number" placeholder="0"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Torneos Latinoamericanos jugados
+                        </label>
+
+                        <input id="latinos" type="number" placeholder="0"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Torneos Somos jugados
+                        </label>
+
+                        <input id="somos" type="number" placeholder="0"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Wild Card / Mundiales jugados
+                        </label>
+
+                        <input id="wildcard" type="number" placeholder="0"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
+                    </div>
+                </div>
+
+                <div class="mb-6">
+
+                    <p class="font-semibold text-gray-700 mb-3">
+                        ¿Participas activamente en ligas?
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <label
+                            class="border rounded-lg p-4 flex items-center justify-center cursor-pointer hover:border-blue-500 peer-checked:border-blue-600 transition">
+
+                            <input type="radio" name="ligas" value="Si" required class="hidden peer">
+
+                            <span class="peer-checked:text-blue-600 font-semibold">
+                                ⚽ Sí
+                            </span>
+
+                        </label>
+
+                        <label
+                            class="border rounded-lg p-4 flex items-center justify-center cursor-pointer hover:border-blue-500 peer-checked:border-blue-600 transition">
+
+                            <input type="radio" name="ligas" value="No" class="hidden peer">
+
+                            <span class="peer-checked:text-blue-600 font-semibold">
+                                🚫 No
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
             </div>
 
             <div class="info-alternativas">
@@ -287,9 +369,10 @@
 
             <div id="preguntas"></div>
 
-            <div class="card">
-                <button type="submit" id="btnEnviar" disabled>Enviar Evaluación</button>
-            </div>
+            <button id="btnEnviar"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition">
+                Enviar Evaluación
+            </button>
 
         </form>
 
@@ -446,7 +529,11 @@
 
             const titulo = document.createElement("div");
             titulo.className = "card";
-            titulo.innerHTML = `<h2>${bloque.titulo}</h2>`;
+            titulo.innerHTML = `
+                                <h2 class="text-xl font-bold text-slate-700 border-b pb-2">
+                                ${bloque.titulo}
+                                </h2>
+                                `;
             contenedor.appendChild(titulo);
 
             bloque.preguntas.forEach((texto, index) => {
@@ -454,18 +541,31 @@
                 const numero = obtenerNumeroPregunta(paginaActual, index);
 
                 const card = document.createElement("div");
-                card.className = "card";
+                card.className = "bg-white border rounded-lg p-5 mb-4 shadow-sm";
 
                 card.innerHTML = `
 
-<div class="pregunta">${numero}. ${texto}</div>
+                    <div class="text-lg font-semibold text-gray-800 leading-relaxed">${numero}. ${texto}</div>
 
-<div class="opciones">
-<label><input type="radio" name="p${numero}" value="3"> Siempre</label>
-<label><input type="radio" name="p${numero}" value="2"> A veces</label>
-<label><input type="radio" name="p${numero}" value="1"> Nunca</label>
-</div>
-`;
+                    <div class="flex gap-4 mt-3">
+
+                    <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="p${numero}" value="3" class="accent-green-500">
+                    <span class="font-medium">Siempre</span>
+                    </label>
+
+                    <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="p${numero}" value="2" class="accent-yellow-500">
+                    <span class="font-medium">A veces</span>
+                    </label>
+
+                    <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="p${numero}" value="1" class="accent-red-500">
+                    <span class="font-medium">Nunca</span>
+                    </label>
+
+                    </div>
+                    `;
 
                 const guardada = localStorage.getItem("p" + numero);
 
@@ -529,17 +629,29 @@
 
                 cardNivel.innerHTML = `
 
-<div class="pregunta">
-56. De acuerdo a todo lo recién contestado y con la mano en el corazón,
-¿en qué nivel percibes que está tu juego para afrontar las ligas 2026?
-</div>
+                <div class="pregunta">
+                56. De acuerdo a todo lo recién contestado y con la mano en el corazón,
+                ¿en qué nivel percibes que está tu juego para afrontar las ligas 2026?
 
-<div class="opciones">
-<input type="text" id="nivelPercibidoInput"
-placeholder="Ej: Inicial, Medio, Avanzado..."
-style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-</div>
-`;
+                <div style="font-size: 12px; margin-top:8px; font-style: italic;">
+                <b>Ejemplos de respuesta:</b>
+                <ul style="margin:4px 0 0 18px; padding:0;">
+                <li><b><i>Inicial</i></b></li>
+                <li><b><i>Inicial / Medio</i></b></li>
+                <li><b><i>Medio</i></b></li>
+                <li><b><i>Medio / Avanzado</i></b></li>
+                <li><b><i>Avanzado</i></b></li>
+                </ul>
+                </div>
+
+                </div>
+
+                <div class="opciones">
+                <input type="text" id="nivelPercibidoInput"
+                placeholder="Ej: Inicial, Medio, Avanzado..."
+                class="w-full mt-3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                </div>
+                `;
 
                 const inputNivel = cardNivel.querySelector("#nivelPercibidoInput");
 
@@ -573,6 +685,9 @@ style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
                 const prev = document.createElement("button");
                 prev.innerText = "Anterior";
 
+                prev.className =
+                    "px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg shadow transition";
+
                 prev.onclick = () => {
                     paginaActual--;
                     cargarPagina();
@@ -586,6 +701,9 @@ style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
 
                 const next = document.createElement("button");
                 next.innerText = "Siguiente";
+
+                next.className =
+                    "px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition";
 
                 next.onclick = () => {
                     paginaActual++;
