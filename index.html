@@ -766,6 +766,61 @@
 
             e.preventDefault();
 
+            // VALIDAR QUE TODAS LAS PREGUNTAS ESTÉN RESPONDIDAS
+            let faltantes = [];
+
+            for (let i = 1; i <= preguntas.length; i++) {
+                if (!localStorage.getItem("p" + i)) {
+                    faltantes.push(i);
+                }
+            }
+
+            // VALIDAR CAMPOS DEL FORMULARIO
+            const nombre = document.getElementById("nombre").value.trim();
+            const anioIngreso = document.getElementById("anioIngreso").value.trim();
+            const nacionales = document.getElementById("nacionales").value.trim();
+            const internacionales = document.getElementById("internacionales").value.trim();
+            const latinos = document.getElementById("latinos").value.trim();
+            const somos = document.getElementById("somos").value.trim();
+            const wildcard = document.getElementById("wildcard").value.trim();
+
+            const ligas = document.querySelector('input[name="ligas"]:checked');
+
+            const nivelPercibido = localStorage.getItem("nivelPercibido");
+
+            if (
+                faltantes.length > 0 ||
+                !nombre ||
+                !anioIngreso ||
+                !nacionales ||
+                !internacionales ||
+                !latinos ||
+                !somos ||
+                !wildcard ||
+                !ligas ||
+                !nivelPercibido
+            ) {
+
+                alert("⚠️ Debes completar todas las preguntas y campos antes de enviar el formulario.");
+
+                if (faltantes.length > 0) {
+
+                    const primeraFaltante = faltantes[0];
+
+                    const elemento = document.querySelector(`input[name="p${primeraFaltante}"]`);
+
+                    if (elemento) {
+                        elemento.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    }
+
+                }
+
+                return;
+            }
+
             let puntaje = 0;
             const respuestas = {};
 
