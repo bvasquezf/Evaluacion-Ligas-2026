@@ -745,9 +745,6 @@
             document.getElementById("progressBar").style.width = porcentaje + "%";
             document.getElementById("progressText").innerText = porcentaje + "% completado";
 
-            if (porcentaje === 100) {
-                document.getElementById("btnEnviar").disabled = false;
-            }
 
         }
 
@@ -775,9 +772,13 @@
             let faltantes = [];
 
             for (let i = 1; i <= preguntas.length; i++) {
-                if (!localStorage.getItem("p" + i)) {
+
+                const respondida = document.querySelector(`input[name="p${i}"]:checked`);
+
+                if (!respondida) {
                     faltantes.push(i);
                 }
+
             }
             // limpiar marcas anteriores
             document.querySelectorAll(".pregunta-faltante").forEach(el => {
@@ -827,20 +828,51 @@
                 !nivelPercibido
             ) {
 
-                alert(`⚠️ Te faltan ${faltantes.length} preguntas por responder.`);
+                let mensaje = "⚠️ Debes completar el formulario.\n\n";
+
+                if (faltantes.length > 0) {
+                    mensaje += `• Faltan ${faltantes.length} preguntas por responder\n`;
+                }
+
+                if (!nombre || !anioIngreso || !nacionales || !internacionales || !latinos || !somos || !wildcard) {
+                    mensaje += "• Debes completar tus datos personales\n";
+                }
+
+                if (!ligas) {
+                    mensaje += "• Debes indicar si participas en ligas\n";
+                }
+
+                if (!nivelPercibido) {
+                    mensaje += "• Debes indicar tu nivel percibido\n";
+                }
+
+                alert(mensaje);
 
                 if (faltantes.length > 0) {
 
                     const primeraFaltante = faltantes[0];
 
-                    const elemento = document.querySelector(`input[name="p${primeraFaltante}"]`);
+                    const bloqueIndex = bloques.findIndex(b => {
+                        const inicio = bloques.slice(0, bloques.indexOf(b)).reduce((a, c) => a + c.preguntas.length, 0) + 1;
+                        const fin = inicio + b.preguntas.length - 1;
+                        return primeraFaltante >= inicio && primeraFaltante <= fin;
+                    });
 
-                    if (elemento) {
-                        elemento.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center"
-                        });
-                    }
+                    paginaActual = bloqueIndex;
+                    cargarPagina();
+
+                    setTimeout(() => {
+
+                        const elemento = document.querySelector(`input[name="p${primeraFaltante}"]`);
+
+                        if (elemento) {
+                            elemento.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center"
+                            });
+                        }
+
+                    }, 200);
 
                 }
 
