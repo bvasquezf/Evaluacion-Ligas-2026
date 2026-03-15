@@ -418,7 +418,7 @@
 
     <script>
 
-        const FORM_VERSION = "1.3";
+        const FORM_VERSION = "1.4";
 
         const versionGuardada = localStorage.getItem("form_version");
 
@@ -846,7 +846,7 @@
 
                 if (input) {
 
-                    const card = input.closest(".bg-white");
+                    const card = input.closest("[class*='bg']");
 
                     if (card) {
                         card.classList.add("pregunta-faltante");
@@ -857,13 +857,13 @@
             });
 
             // VALIDAR CAMPOS DEL FORMULARIO
-            const nombre = document.getElementById("nombre").value.trim();
-            const anioIngreso = document.getElementById("anioIngreso").value.trim();
-            const nacionales = document.getElementById("nacionales").value.trim();
-            const internacionales = document.getElementById("internacionales").value.trim();
-            const latinos = document.getElementById("latinos").value.trim();
-            const somos = document.getElementById("somos").value.trim();
-            const wildcard = document.getElementById("wildcard").value.trim();
+            const nombre = document.getElementById("nombre")?.value.trim();
+            const anioIngreso = document.getElementById("anioIngreso")?.value.trim();
+            const nacionales = document.getElementById("nacionales")?.value.trim();
+            const internacionales = document.getElementById("internacionales")?.value.trim();
+            const latinos = document.getElementById("latinos")?.value.trim();
+            const somos = document.getElementById("somos")?.value.trim();
+            const wildcard = document.getElementById("wildcard")?.value.trim();
 
             const ligas = document.querySelector('input[name="ligas"]:checked');
 
@@ -898,6 +898,10 @@
 
                 if (!nivelPercibido) {
                     mensaje += "• Debes indicar tu nivel percibido\n";
+                }
+
+                if (mensaje === "⚠️ Debes completar el formulario.\n\n") {
+                    mensaje += "• Hay campos incompletos en el formulario\n";
                 }
 
                 alert(mensaje);
