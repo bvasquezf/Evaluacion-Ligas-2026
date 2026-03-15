@@ -385,6 +385,19 @@
 
     <script>
 
+        const FORM_VERSION = "1.1";
+
+        const versionGuardada = localStorage.getItem("form_version");
+
+        if (versionGuardada !== FORM_VERSION) {
+
+            localStorage.clear();
+            localStorage.setItem("form_version", FORM_VERSION);
+
+            console.log("Nueva versión del formulario detectada, limpiando localStorage");
+
+        }
+
         const endpoint = "https://script.google.com/macros/s/AKfycbyfdcs01aRcsvhUhUX8wYuqdjGLSRgjJ2gWk80yuMQA7GpMkv0Kt76PHKoHz8u0G37p/exec";
 
         /* LIMITE EDICIONES */
@@ -773,9 +786,9 @@
 
             for (let i = 1; i <= preguntas.length; i++) {
 
-                const respondida = document.querySelector(`input[name="p${i}"]:checked`);
+                const respuesta = localStorage.getItem("p" + i);
 
-                if (!respondida) {
+                if (!respuesta) {
                     faltantes.push(i);
                 }
 
