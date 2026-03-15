@@ -212,6 +212,11 @@
             cursor: pointer;
             font-size: 12px;
         }
+
+        .pregunta-faltante {
+            border: 2px solid #ef4444;
+            background: #fef2f2;
+        }
     </style>
 
 </head>
@@ -774,6 +779,27 @@
                     faltantes.push(i);
                 }
             }
+            // limpiar marcas anteriores
+            document.querySelectorAll(".pregunta-faltante").forEach(el => {
+                el.classList.remove("pregunta-faltante");
+            });
+
+            // marcar preguntas faltantes
+            faltantes.forEach(num => {
+
+                const input = document.querySelector(`input[name="p${num}"]`);
+
+                if (input) {
+
+                    const card = input.closest(".card");
+
+                    if (card) {
+                        card.classList.add("pregunta-faltante");
+                    }
+
+                }
+
+            });
 
             // VALIDAR CAMPOS DEL FORMULARIO
             const nombre = document.getElementById("nombre").value.trim();
@@ -801,7 +827,7 @@
                 !nivelPercibido
             ) {
 
-                alert("⚠️ Debes completar todas las preguntas y campos antes de enviar el formulario.");
+                alert(`⚠️ Te faltan ${faltantes.length} preguntas por responder.`);
 
                 if (faltantes.length > 0) {
 
