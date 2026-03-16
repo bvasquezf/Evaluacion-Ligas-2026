@@ -8,7 +8,7 @@ const bloques = [
                     "FUERA DEL PARTIDO: pedaleas y frenas con fluidez utilizando una mano, sin que se levanten las ruedas y manteniendo el control?",
                     "DENTRO DEL PARTIDO: pensando en defender el arco, eres capaz de entrar en tu area, posicionarte al arco, mantener la posicion de arquero correctamente y lograrlo lo mas eficiente posible?",
                     "DENTRO DEL PARTIDO: en carrera y con control, logras frenar, manteniendo el control de la bici sin caer de ella?",
-                    "FUERA DEL PARTIDO: logras mantener el equilibrio por un tiempo prolongado (+15 seg), sin malet y sin saltar?",
+                    "FUERA DEL PARTIDO: logras mantener el equilibrio arriba de la bicicleta por un tiempo prolongado (+20 seg), sin malet y sin saltar?",
                     "DENTRO DEL PARTIDO: ocupas la bici para cubrir la pelota, ya sea por tu lado habil o no. sin que te la quiten?",
                     "DENTRO DEL PARTIDO: encalado o no, saltas para acomodar tu posición para defender la pelota?",
                     "RESOLUCIÓN EN ZONAS CRITICAS: ¿Dominas el juego en paredes y esquinas? (¿Sabes cómo salir de situaciones de presión extrema sin perder la posesión?).",
@@ -46,7 +46,7 @@ const bloques = [
                     "GESTIÓN DE PRESIÓN: ¿Eres capaz de mantener la calma y buscar un pase seguro cuando te encuentras presionado por dos oponentes en una esquina?",
                     "VISIÓN PERIFÉRICA: ¿Puedes ubicar la posición de tus compañeros y rivales sin dejar de mirar la pelota directamente?",
                     "CÁLCULO DE TRAYECTORIA: ¿Eres capaz de anticipar el rebote de la pelota en las paredes o esquinas para ganar la posición antes que el rival?",
-                    "SÍNTESIS COMUNICATIVA: ¿Logras dar instrucciones precisas de máximo dos palabras (ej. ¡Sube!, ¡Cambio!) en medio de la intensidad del juego?",
+                    "SÍNTESIS COMUNICATIVA: ¿Logras dar instrucciones precisas de máximo dos palabras (ej. "+"¡Sube!"+","+ "¡Cambio!"+") en medio de la intensidad del juego?",
                     "COMUNICACIÓN OPERATIVA: ¿Utilizas un lenguaje táctico fluido para coordinar la ubicación de tus compañeros (ej. cantar atrás, lado, orilla) durante el juego?",
                     "DOMINIO DEL ESPACIO: ¿Tienes claras las nociones básicas de posicionamiento (delante, atrás, perímetro, medio) para mantener el orden estructural del equipo?",
                     "PRIORIZACIÓN DE AMENAZAS: Al defender un contragolpe, ¿identificas correctamente quién es el jugador más peligroso (el que lleva la bola o el que busca el pase al segundo palo)?",
@@ -55,15 +55,15 @@ const bloques = [
                     "LECTURA DE PORTERÍA: ¿Analizas los hábitos del arquero rival (ej. si suele salir mucho o si deja libre el primer palo) antes de ejecutar un tiro?",
                     "INTELIGENCIA EMOCIONAL: ¿Eres capaz de dar instrucciones constructivas a un compañero que acaba de cometer un error sin romper la dinámica del equipo?",
                     "ADAPATABILIDAD TÁCTICA: Si la estrategia inicial no funciona contra un equipo específico, ¿tienes la capacidad de proponer o adoptar un cambio de rol a mitad del partido?",
-                    "GESTION DEL TIMEOUT PERSONAL: ¿Reconoces el momento exacto en que debes bajar el ritmo para permitir que tu equipo se reorganice defensivamente?",
+                    "GESTION DEL "+"TIMEOUT"+" PERSONAL: ¿Reconoces el momento exacto en que debes bajar el ritmo para permitir que tu equipo se reorganice defensivamente?",
                     "LIDERAZGO Y ESTRATEGIA: ¿Te sientes capaz de asumir el armado, la coordinación y la dirección de tu equipo durante un partido de alta intensidad?",
                     "ROLES ESPECÍFICOS: ¿Posees nociones avanzadas sobre las responsabilidades tácticas de cada posición (delantero, medio y arquero) y sabes cuándo rotar entre ellas?",
-                    "ANÁLISIS TACTICO (LECTURA): ¿Qué tan desarrollada consideras tu lectura de partido, tanto para ajustar la estrategia mientras juegas como para analizar errores desde fuera?"
+                    "ANÁLISIS TACTICO (LECTURA): ¿Qué tan desarrollada consideras tu "+"lectura de partido"+", tanto para ajustar la estrategia mientras juegas como para analizar errores desde fuera?"
                 ]
             },
 
             {
-                titulo: "D)BAJAR (inclinar la bici bajar el cuerpo y extender el brazo para colocar el malet paralelo al suelo)",
+                titulo: "D) BAJAR (inclinar la bici bajar el cuerpo y extender el brazo para colocar el malet paralelo al suelo)",
                 preguntas: [
                     "FUERA DEL PARTIDO: sobre la bici eres capas de estirar tu cuerpo y brazo haci a el suelo para recoger el malet ?",
                     "DENTRO DEL PARTIDO: pensando en tu posicion de arquero, eres capas de bajar tu cuerpo estirando tu brazo y posicionando el malet en el espacio entre las dos ruedas para evitar que el tiro del contrincante entre en tu porteria?",
@@ -72,17 +72,17 @@ const bloques = [
             },
 
             {
-                titulo: "E) PIVOT (giro de la bici y el cuerpo sobre una de las ruedas de la bici)",
+                titulo: "E) PIVOT (giro de la bici y el cuerpo sobre una de las ruedas de la bici)			",
                 preguntas: [
                     "DENTRO DEL PARTIDO: Haces ajustes de posición mediante pequeños pivots con la rueda delantera para reorientar la parte trasera de tu bici?",
                     "DENTRO DEL PARTIDO: Recurres a pequeños pivot trasero (levantar y mover la rueda delantera) para corregir tu posición en espacios reducidos durante el juego?",
-                    "DENTRO DEL PARTIDO: realizas pivot con la rueda trasera (levantando la rueda delantera y girando +90°) para cambios de dirección bruscos hacia tu lado hábil durante el partido??",
+                    "DENTRO DEL PARTIDO: realizas pivot con la rueda trasera (levantando la rueda delantera y girando +90°) para cambios de dirección bruscos hacia tu lado hábil durante el partido?",
                     "DENTRO DEL PARTIDO: Logras ejecutar pivoteos de más de 90° utilizando ambas ruedas como eje (delantera en ambos sentidos y trasera hacia tu lado hábil) para rotar sobre tu propio eje como un trompo?"
                 ]
             },
 
             {
-                titulo: "F) SCOOP (levantar la pelota, utilizando la parte abierta del cabezal, con la fuerza centripeta)",
+                titulo: "F) SCOOP (levantar la pelota, utilizando la parte abierta del cabezal, con la fuerza centripeta)			",
                 preguntas: [
                     "FUERA DEL PARTIDO: practicas scoop basicos como lebantarla contra la pared o jugando con la fuerza centripeta para llevar de una lado al otro de tu cuerpo?",
                     "FUERA DEL PARTIDO: sobre la bici, practicas levantar la pelota a diferentes alturas utilizando scoop?",
