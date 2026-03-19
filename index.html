@@ -5,436 +5,304 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>Evaluación Club</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Evaluación Ligas 2026</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
-            background: #f4f6f9;
+            background: #0f172a;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
+        .header-gradient {
+            color: #e2e8f0;
         }
 
         .card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 24px;
+            margin-bottom: 16px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
         }
 
-        h1 {
-            text-align: center;
-        }
-
-        .pregunta {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .opciones {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .opciones label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px;
-            border-radius: 6px;
-            background: #f1f1f1;
-            cursor: pointer;
-        }
-
-        input[type="radio"] {
-            transform: scale(1.2);
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            background: #1e88e5;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #1565c0;
-        }
-
-        @media (min-width:600px) {
-            .opciones {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-        }
-
-        .progress-container {
-            width: 100%;
-            background: #ddd;
-            border-radius: 20px;
-            overflow: hidden;
-            height: 20px;
-            margin-bottom: 10px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: #4caf50;
-            transition: width 0.3s ease;
-        }
-
-        .mensaje-exito {
-            display: none;
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 15px;
-            font-weight: bold;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .card:hover {
+            border-color: rgba(148, 163, 184, 0.2);
         }
 
         .progress-wrapper {
             position: sticky;
             top: 0;
-            background: #f4f6f9;
-            padding: 10px 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
         }
 
-        .progress-container {
-            width: 100%;
-            background: #ddd;
-            border-radius: 20px;
-            overflow: hidden;
-            height: 20px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: #4caf50;
-            transition: width 0.3s ease;
-        }
-
-        #progressText {
+        .scale-option {
+            flex: 1;
             text-align: center;
-            font-weight: bold;
-            margin: 5px 0 0 0;
-        }
-
-        .progress-completo {
-            animation: pulseGreen 0.6s ease-in-out;
-            background: #2e7d32 !important;
-        }
-
-        @keyframes pulseGreen {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.03);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .card.completada {
-            opacity: 0.6;
-            transition: all 0.3s ease;
-        }
-
-        .respuesta-final {
-            font-weight: bold;
-            color: #2e7d32;
-            margin-top: 5px;
-        }
-
-        .info-alternativas {
-            background: #ffffff;
-            padding: 15px;
+            padding: 10px 4px;
             border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .info-alternativas h3 {
-            margin-top: 0;
-            color: #1e88e5;
-        }
-
-        .info-alternativas ul {
-            padding-left: 20px;
-            margin: 10px 0 0 0;
-        }
-
-        .info-alternativas li {
-            margin-bottom: 6px;
-        }
-
-        .btn-editar {
-            margin-top: 8px;
-            padding: 6px 10px;
-            border: none;
-            background: #ff9800;
-            color: white;
-            border-radius: 6px;
             cursor: pointer;
-            font-size: 12px;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            font-size: 13px;
+            font-weight: 500;
         }
+
+        .scale-option:hover {
+            transform: translateY(-2px);
+        }
+
+        .scale-option.selected {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .scale-1 { background: rgba(239, 68, 68, 0.1); color: #fca5a5; border-color: rgba(239, 68, 68, 0.2); }
+        .scale-1.selected { background: rgba(239, 68, 68, 0.3); border-color: #ef4444; color: #fff; }
+
+        .scale-2 { background: rgba(249, 115, 22, 0.1); color: #fdba74; border-color: rgba(249, 115, 22, 0.2); }
+        .scale-2.selected { background: rgba(249, 115, 22, 0.3); border-color: #f97316; color: #fff; }
+
+        .scale-3 { background: rgba(234, 179, 8, 0.1); color: #fde047; border-color: rgba(234, 179, 8, 0.2); }
+        .scale-3.selected { background: rgba(234, 179, 8, 0.3); border-color: #eab308; color: #fff; }
+
+        .scale-4 { background: rgba(34, 197, 94, 0.1); color: #86efac; border-color: rgba(34, 197, 94, 0.2); }
+        .scale-4.selected { background: rgba(34, 197, 94, 0.3); border-color: #22c55e; color: #fff; }
+
+        .scale-5 { background: rgba(59, 130, 246, 0.1); color: #93c5fd; border-color: rgba(59, 130, 246, 0.2); }
+        .scale-5.selected { background: rgba(59, 130, 246, 0.3); border-color: #3b82f6; color: #fff; }
 
         .pregunta-faltante {
-            border: 2px solid #ef4444;
-            background: #fef2f2;
+            border: 2px solid #ef4444 !important;
+            background: rgba(239, 68, 68, 0.1) !important;
+        }
+
+        .input-dark {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #e2e8f0;
+            padding: 10px 16px;
+            border-radius: 10px;
+            width: 100%;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-dark:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .input-dark::placeholder {
+            color: #64748b;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.1);
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.2);
+            color: #e2e8f0;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-1px);
+        }
+
+        .radio-card {
+            border: 2px solid rgba(148, 163, 184, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .radio-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .radio-card.checked {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Success page */
+        .success-page {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .success-page .emoji-big {
+            font-size: 80px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .confetti {
+            position: fixed;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confettiFall linear forwards;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Scale legend mini */
+        .scale-legend {
+            display: flex;
+            gap: 4px;
+            font-size: 10px;
+            color: #64748b;
+            justify-content: space-between;
+            padding: 0 4px;
+            margin-top: 4px;
         }
     </style>
-
 </head>
 
-<body class="bg-slate-100 flex justify-center py-10">
+<body class="flex justify-center py-6 px-4">
 
-    <div class="w-full max-w-3xl bg-white shadow-xl rounded-xl p-8">
+    <div class="w-full max-w-3xl">
 
-        <h1 class="text-2xl font-bold text-center mb-6">
-            Evaluación Nivel Ligas 2026
-        </h1>
-
-        <div id="mensajeExito" class="mensaje-exito">
-            ✅ Evaluación enviada correctamente
+        <!-- Header -->
+        <div class="text-center mb-8" style="animation: fadeInUp 0.6s ease">
+            <div class="text-5xl mb-4">🚲🏑</div>
+            <h1 class="text-3xl md:text-4xl font-extrabold header-gradient mb-2">
+                Evaluación Nivel Ligas 2026
+            </h1>
+            <p class="text-slate-400 text-sm">Autoevaluación de habilidades para la categorización de ligas</p>
         </div>
 
-        <div class="progress-wrapper">
-            <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
-                <div id="progressBar" class="bg-blue-500 h-4 rounded-full transition-all"></div>
+        <!-- Progress -->
+        <div class="progress-wrapper" id="progressWrapper" style="display: none;">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="flex items-center justify-between mb-1">
+                    <span id="progressText" class="text-xs text-slate-400 font-medium"></span>
+                    <span id="progressPage" class="text-xs text-slate-500"></span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5">
+                    <div id="progressBar"
+                        class="h-2.5 rounded-full transition-all duration-500"
+                        style="width: 0%; background: #3b82f6;">
+                    </div>
+                </div>
             </div>
-
-            <p id="progressText" class="text-sm text-gray-600"></p>
         </div>
 
+        <!-- Form -->
         <form id="formulario">
+            <div id="contenidoPaginas"></div>
 
-            <div class="bg-white shadow-md rounded-xl p-6 mb-6 space-y-4">
-                <h2 class="text-lg font-bold mb-4">
-                    Datos del jugador
-                </h2>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
-                            Nombre
-                        </label>
-
-                        <input id="nombre" type="text" placeholder="Ingresa tu nombre"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
-                            Año de ingreso
-                        </label>
-
-                        <input id="anioIngreso" type="number" placeholder="Ej: 2021"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
-                            Torneos nacionales jugados
-                        </label>
-
-                        <input id="nacionales" type="number" placeholder="0"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
-                            Torneos internacionales jugados
-                        </label>
-
-                        <input id="internacionales" type="number" placeholder="0"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
-                            Torneos Latinoamericanos jugados
-                        </label>
-
-                        <input id="latinos" type="number" placeholder="0"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
-                            Torneos Somos jugados
-                        </label>
-
-                        <input id="somos" type="number" placeholder="0"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
-                            Wild Card / Mundiales jugados
-                        </label>
-
-                        <input id="wildcard" type="number" placeholder="0"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
-                    </div>
-                </div>
-
-                <div class="mb-6">
-
-                    <p class="font-semibold text-gray-700 mb-3">
-                        ¿Participas activamente en ligas?
-                    </p>
-
-                    <div class="grid grid-cols-2 gap-4">
-
-                        <label
-                            class="border rounded-lg p-4 flex items-center justify-center cursor-pointer hover:border-blue-500 peer-checked:border-blue-600 transition">
-
-                            <input type="radio" name="ligas" value="Si" required class="hidden peer">
-
-                            <span class="peer-checked:text-blue-600 font-semibold">
-                                ⚽ Sí
-                            </span>
-
-                        </label>
-
-                        <label
-                            class="border rounded-lg p-4 flex items-center justify-center cursor-pointer hover:border-blue-500 peer-checked:border-blue-600 transition">
-
-                            <input type="radio" name="ligas" value="No" class="hidden peer">
-
-                            <span class="peer-checked:text-blue-600 font-semibold">
-                                🚫 No
-                            </span>
-
-                        </label>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="bg-white border rounded-xl shadow-sm p-6 mb-6">
-
-                <h3 class="text-xl font-bold text-slate-700 mb-4 text-center">
-                    — INSTRUCCIONES —
-                </h3>
-
-                <div class="space-y-4 text-gray-700 leading-relaxed text-sm">
-
-                    <p>
-                        El formulario contiene preguntas sobre <strong>habilidades físicas y técnicas</strong>.
-                        Es importante ser lo más sincero posible. No sirve de nada inflar los números,
-                        porque después les tocará jugar en una categoría que no les acomoda y será su
-                        responsabilidad rendir ahí durante todo el año.
-                    </p>
-
-                    <p>
-                        El formulario está separado en <strong>6 bloques</strong> con diferentes preguntas.
-                        A modo de consejo, lee todas las preguntas de cada bloque antes de contestar,
-                        ya que algunas pueden parecer similares, pero <strong>no significan exactamente lo
-                            mismo</strong>.
-                    </p>
-
-                    <div class="bg-amber-50 border-l-4 border-amber-400 p-3 rounded">
-                        <p>
-                            <strong>Ojo:</strong> Lean bien cada pregunta antes de marcar.
-                            El sistema solo permite corregir hasta <strong>5 respuestas</strong>.
-                            Desde la sexta en adelante, la respuesta quedará fija.
-                        </p>
-                    </div>
-
-                    <p class="font-semibold text-gray-800">
-                        Marca la alternativa que más se acerque a tu juego según las siguientes definiciones:
-                    </p>
-
-                    <div class="grid md:grid-cols-3 gap-3 mt-2">
-
-                        <div class="border rounded-lg p-3 bg-green-50">
-                            <p class="font-semibold text-green-700">SIEMPRE</p>
-                            <p class="text-xs mt-1">
-                                8 a 10 de 10 veces puedo hacerlo bien sin fallas.
-                            </p>
-                        </div>
-
-                        <div class="border rounded-lg p-3 bg-yellow-50">
-                            <p class="font-semibold text-yellow-700">A VECES</p>
-                            <p class="text-xs mt-1">
-                                4 a 6 de 10 veces puedo hacerlo, pero no siempre me sale bien.
-                            </p>
-                        </div>
-
-                        <div class="border rounded-lg p-3 bg-red-50">
-                            <p class="font-semibold text-red-700">NUNCA</p>
-                            <p class="text-xs mt-1">
-                                Menos de 3 de 10 veces me sale bien; en general me ayuda bastante la suerte.
-                            </p>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div id="preguntas"></div>
-
-            <button id="btnEnviar"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition">
+            <button id="btnEnviar" type="submit" class="btn-primary" style="display: none;">
                 Enviar Evaluación
             </button>
-
         </form>
+
+        <!-- Success Page -->
+        <div id="successPage" class="success-page">
+            <div class="card" style="padding: 50px 30px;">
+                <div class="emoji-big">🎉</div>
+                <h2 class="text-3xl font-extrabold text-white mt-6 mb-3">¡Listo!</h2>
+                <p class="text-xl text-slate-300 mb-2">Tu evaluación fue enviada correctamente</p>
+                <p class="text-slate-400 mb-6">Gracias por tomarte el tiempo de responder con sinceridad.<br>
+                    Esto nos ayuda a armar ligas más parejas y competitivas para todos. 💪</p>
+
+                <div id="resultadoNivel" class="card" style="margin: 20px auto; max-width: 400px; text-align: center;">
+                </div>
+
+                <p class="text-slate-500 text-sm mt-8">
+                    Los resultados serán revisados por la organización.<br>
+                    ¡Nos vemos en la cancha! 🚲🏑
+                </p>
+            </div>
+        </div>
 
     </div>
 
     <script>
 
-        const FORM_VERSION = "1.4";
+        const FORM_VERSION = "2.0";
 
         const versionGuardada = localStorage.getItem("form_version");
-
         if (versionGuardada !== FORM_VERSION) {
-
             localStorage.clear();
             localStorage.setItem("form_version", FORM_VERSION);
-
-            console.log("Nueva versión del formulario detectada, limpiando localStorage");
-
         }
 
         const endpoint = "https://script.google.com/macros/s/AKfycbyfdcs01aRcsvhUhUX8wYuqdjGLSRgjJ2gWk80yuMQA7GpMkv0Kt76PHKoHz8u0G37p/exec";
 
-        /* LIMITE EDICIONES */
-
+        /* EDIT LIMIT */
         const MAX_EDICIONES = 10;
         let edicionesUsadas = parseInt(localStorage.getItem("edicionesUsadas")) || 0;
 
@@ -444,9 +312,7 @@
         }
 
         /* TIMER */
-
         let tiempoInicio = localStorage.getItem("inicioTest");
-
         if (!tiempoInicio) {
             tiempoInicio = Date.now();
             localStorage.setItem("inicioTest", tiempoInicio);
@@ -454,12 +320,20 @@
             tiempoInicio = parseInt(tiempoInicio);
         }
 
+        /* SCALE OPTIONS */
+        const scaleOptions = [
+            { value: 1, label: "Nunca",         sub: "0-2 de 10", emoji: "😕" },
+            { value: 2, label: "Casi nunca",    sub: "3-4 de 10", emoji: "😐" },
+            { value: 3, label: "A veces",       sub: "5-6 de 10", emoji: "🤔" },
+            { value: 4, label: "Casi siempre",  sub: "7-8 de 10", emoji: "😊" },
+            { value: 5, label: "Siempre",       sub: "9-10 de 10", emoji: "💪" },
+        ];
+
         /* BLOQUES */
-
         const bloques = [
-
             {
-                titulo: "A) CONTROL Y MANEJO DE BICI, DEFENZA Y PORTERIA",
+                titulo: "A) Control y Manejo de Bici, Defensa y Portería",
+                icono: "🚲",
                 preguntas: [
                     "DENTRO DEL PARTIDO: conduces la bici con una mano con total seguridad?",
                     "DENTRO DEL PARTIDO: a velocidad moderada y con control, logras frenar, manteniendo el control de la bici sin caer de ella?",
@@ -475,9 +349,9 @@
                     "ESTABILIDAD EN CHOQUE: ¿Logra absorber el contacto físico de un oponente y mantener la trayectoria de la bicicleta sin perder el equilibrio o poner un pie en el suelo (dab)?"
                 ]
             },
-
             {
-                titulo: "B) CONTROL DE PELOTA, PASES Y TIRO",
+                titulo: "B) Control de Pelota, Pases y Tiro",
+                icono: "🏑",
                 preguntas: [
                     "FUERA DEL PARTIDO: logras llevar la pelota más de una vuelta a la cancha, sin perder el control de la pelota?",
                     "DENTRO DEL PARTIDO: recibir pases es importante. los recibes sin problema por tu lado hábil?",
@@ -497,14 +371,14 @@
                     "DENTRO DEL PARTIDO: te envían un pase, tu primera reacción es hacer un tiro de primera efectivo al arco? (1 movimiento)"
                 ]
             },
-
             {
-                titulo: "C) HABILIDADES BLANDAS",
+                titulo: "C) Habilidades Blandas",
+                icono: "🧠",
                 preguntas: [
                     "GESTIÓN DE PRESIÓN: ¿Eres capaz de mantener la calma y buscar un pase seguro cuando te encuentras presionado por dos oponentes en una esquina?",
                     "VISIÓN PERIFÉRICA: ¿Puedes ubicar la posición de tus compañeros y rivales sin dejar de mirar la pelota directamente?",
                     "CÁLCULO DE TRAYECTORIA: ¿Eres capaz de anticipar el rebote de la pelota en las paredes o esquinas para ganar la posición antes que el rival?",
-                    "SÍNTESIS COMUNICATIVA: ¿Logras dar instrucciones precisas de máximo dos palabras (ej. "+"¡Sube!"+","+ "¡Cambio!"+") en medio de la intensidad del juego?",
+                    "SÍNTESIS COMUNICATIVA: ¿Logras dar instrucciones precisas de máximo dos palabras (ej. \"¡Sube!\", \"¡Cambio!\") en medio de la intensidad del juego?",
                     "COMUNICACIÓN OPERATIVA: ¿Utilizas un lenguaje táctico fluido para coordinar la ubicación de tus compañeros (ej. cantar atrás, lado, orilla) durante el juego?",
                     "DOMINIO DEL ESPACIO: ¿Tienes claras las nociones básicas de posicionamiento (delante, atrás, perímetro, medio) para mantener el orden estructural del equipo?",
                     "PRIORIZACIÓN DE AMENAZAS: Al defender un contragolpe, ¿identificas correctamente quién es el jugador más peligroso (el que lleva la bola o el que busca el pase al segundo palo)?",
@@ -512,25 +386,27 @@
                     "CONCIENCIA DEL CRONÓMETRO: ¿Ajustas tu toma de riesgos dependiendo del tiempo restante y el marcador (ej. posesiones más largas si vas ganando por uno al final)?",
                     "LECTURA DE PORTERÍA: ¿Analizas los hábitos del arquero rival (ej. si suele salir mucho o si deja libre el primer palo) antes de ejecutar un tiro?",
                     "INTELIGENCIA EMOCIONAL: ¿Eres capaz de dar instrucciones constructivas a un compañero que acaba de cometer un error sin romper la dinámica del equipo?",
-                    "ADAPATABILIDAD TÁCTICA: Si la estrategia inicial no funciona contra un equipo específico, ¿tienes la capacidad de proponer o adoptar un cambio de rol a mitad del partido?",
-                    "GESTION DEL "+"TIMEOUT"+" PERSONAL: ¿Reconoces el momento exacto en que debes bajar el ritmo para permitir que tu equipo se reorganice defensivamente?",
+                    "ADAPTABILIDAD TÁCTICA: Si la estrategia inicial no funciona contra un equipo específico, ¿tienes la capacidad de proponer o adoptar un cambio de rol a mitad del partido?",
+                    "GESTIÓN DEL TIMEOUT PERSONAL: ¿Reconoces el momento exacto en que debes bajar el ritmo para permitir que tu equipo se reorganice defensivamente?",
                     "LIDERAZGO Y ESTRATEGIA: ¿Te sientes capaz de asumir el armado, la coordinación y la dirección de tu equipo durante un partido de alta intensidad?",
                     "ROLES ESPECÍFICOS: ¿Posees nociones avanzadas sobre las responsabilidades tácticas de cada posición (delantero, medio y arquero) y sabes cuándo rotar entre ellas?",
-                    "ANÁLISIS TACTICO (LECTURA): ¿Qué tan desarrollada consideras tu "+"lectura de partido"+", tanto para ajustar la estrategia mientras juegas como para analizar errores desde fuera?"
+                    "ANÁLISIS TÁCTICO (LECTURA): ¿Qué tan desarrollada consideras tu \"lectura de partido\", tanto para ajustar la estrategia mientras juegas como para analizar errores desde fuera?"
                 ]
             },
-
             {
-                titulo: "D) BAJAR (inclinar la bici bajar el cuerpo y extender el brazo para colocar el malet paralelo al suelo)",
+                titulo: "D) Bajar",
+                icono: "⬇️",
+                subtitulo: "Inclinar la bici, bajar el cuerpo y extender el brazo para colocar el malet paralelo al suelo",
                 preguntas: [
-                    "FUERA DEL PARTIDO: sobre la bici eres capas de estirar tu cuerpo y brazo hacia el suelo para recoger el malet ?",
-                    "DENTRO DEL PARTIDO: pensando en tu posicion de arquero, eres capas de bajar tu cuerpo estirando tu brazo y posicionando el malet en el espacio entre las dos ruedas para evitar que el tiro del contrincante entre en tu porteria?",
+                    "FUERA DEL PARTIDO: sobre la bici eres capaz de estirar tu cuerpo y brazo hacia el suelo para recoger el malet?",
+                    "DENTRO DEL PARTIDO: pensando en tu posición de arquero, eres capaz de bajar tu cuerpo estirando tu brazo y posicionando el malet en el espacio entre las dos ruedas para evitar que el tiro del contrincante entre en tu portería?",
                     "DENTRO DEL PARTIDO: si eres defensa, logras interceptar un pase, bajando tu cuerpo y posicionando el malet paralelo al suelo, para evitar que el pase del contrincante llegue a destino?"
                 ]
             },
-
             {
-                titulo: "E) PIVOT (giro de la bici y el cuerpo sobre una de las ruedas de la bici)			",
+                titulo: "E) Pivot",
+                icono: "🔄",
+                subtitulo: "Giro de la bici y el cuerpo sobre una de las ruedas",
                 preguntas: [
                     "DENTRO DEL PARTIDO: Haces ajustes de posición mediante pequeños pivots con la rueda delantera para reorientar la parte trasera de tu bici?",
                     "DENTRO DEL PARTIDO: Recurres a pequeños pivot trasero (levantar y mover la rueda delantera) para corregir tu posición en espacios reducidos durante el juego?",
@@ -538,258 +414,432 @@
                     "DENTRO DEL PARTIDO: Logras ejecutar pivoteos de más de 90° utilizando ambas ruedas como eje (delantera en ambos sentidos y trasera hacia tu lado hábil) para rotar sobre tu propio eje como un trompo?"
                 ]
             },
-
             {
-                titulo: "F) SCOOP (levantar la pelota, utilizando la parte abierta del cabezal, con la fuerza centripeta)			",
+                titulo: "F) Scoop",
+                icono: "🥄",
+                subtitulo: "Levantar la pelota utilizando la parte abierta del cabezal, con la fuerza centrípeta",
                 preguntas: [
-                    "FUERA DEL PARTIDO: practicas scoop basicos como lanzar la pelota contra la pared o jugando con la fuerza centripeta para llevar de una lado al otro de tu cuerpo?",
+                    "FUERA DEL PARTIDO: practicas scoop básicos como lanzar la pelota contra la pared o jugando con la fuerza centrípeta para llevar de un lado al otro de tu cuerpo?",
                     "FUERA DEL PARTIDO: sobre la bici, practicas levantar la pelota a diferentes alturas utilizando scoop?",
                     "DENTRO DEL PARTIDO: cambias la pelota de lado a lado por delante o detrás de tu bici, utilizando scoop?",
-                    "DENTRO DEL PARTIDO: utilizas scoop en un partido para liberarte de un contrincante, dar un pase o acomodar la pelota para seguir tu propio camino? (utilizando como maximo 3 cambios de direccion sobre la pelota como especifica el reglamento)"
+                    "DENTRO DEL PARTIDO: utilizas scoop en un partido para liberarte de un contrincante, dar un pase o acomodar la pelota para seguir tu propio camino? (utilizando como máximo 3 cambios de dirección sobre la pelota como especifica el reglamento)"
                 ]
             }
-
         ];
 
         const preguntas = bloques.flatMap(b => b.preguntas);
-        const contenedor = document.getElementById("preguntas");
+        const contenedor = document.getElementById("contenidoPaginas");
 
+        // Pages: 0=instructions, 1=player data, 2..7=question blocks, 8=final question
         let paginaActual = 0;
+        const TOTAL_PAGES = 2 + bloques.length + 1; // instructions + datos + 6 blocks + final question
 
-        /* NUMERACION */
-
+        /* QUESTION NUMBERING */
         function obtenerNumeroPregunta(bloqueIndex, preguntaIndex) {
-
             let contador = 0;
-
             for (let i = 0; i < bloqueIndex; i++) {
                 contador += bloques[i].preguntas.length;
             }
-
             return contador + preguntaIndex + 1;
-
         }
 
-        /* CARGAR PAGINA */
-
+        /* RENDER PAGE */
         function cargarPagina() {
-
             contenedor.innerHTML = "";
 
-            const bloque = bloques[paginaActual];
+            const progressWrapper = document.getElementById("progressWrapper");
+            const btnEnviar = document.getElementById("btnEnviar");
 
-            const titulo = document.createElement("div");
-            titulo.className = "card";
-            titulo.innerHTML = `
-                                <h2 class="text-xl font-bold text-slate-700 border-b pb-2">
-                                ${bloque.titulo}
-                                </h2>
-                                `;
-            contenedor.appendChild(titulo);
+            // Show/hide progress
+            progressWrapper.style.display = paginaActual > 0 ? "block" : "none";
+            btnEnviar.style.display = "none";
 
-            bloque.preguntas.forEach((texto, index) => {
-
-                const numero = obtenerNumeroPregunta(paginaActual, index);
-
-                const card = document.createElement("div");
-                card.className = "bg-white border rounded-lg p-5 mb-4 shadow-sm";
-
-                card.innerHTML = `
-
-                    <div class="text-lg font-semibold text-gray-800 leading-relaxed">${numero}. ${texto}</div>
-
-                    <div class="flex gap-4 mt-3">
-
-                    <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="p${numero}" value="3" class="accent-green-500">
-                    <span class="font-medium">Siempre</span>
-                    </label>
-
-                    <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="p${numero}" value="2" class="accent-yellow-500">
-                    <span class="font-medium">A veces</span>
-                    </label>
-
-                    <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="p${numero}" value="1" class="accent-red-500">
-                    <span class="font-medium">Nunca</span>
-                    </label>
-
-                    </div>
-                    `;
-
-                const guardada = localStorage.getItem("p" + numero);
-
-                if (guardada) {
-                    const radio = card.querySelector(`input[value="${guardada}"]`);
-                    if (radio) radio.checked = true;
-                }
-
-                card.querySelectorAll("input").forEach(radio => {
-                    radio.addEventListener("change", function () {
-
-                        const respuestaAnterior = localStorage.getItem("p" + numero);
-
-                        // detectar edición
-                        if (respuestaAnterior && respuestaAnterior !== this.value) {
-
-                            if (edicionesUsadas >= MAX_EDICIONES) {
-
-                                alert("⚠️ Has alcanzado el límite de ediciones permitido.");
-
-                                const anterior = card.querySelector(`input[value="${respuestaAnterior}"]`);
-                                if (anterior) anterior.checked = true;
-
-                                return;
-
-                            }
-
-                            registrarEdicion();
-                        }
-
-                        localStorage.setItem("p" + numero, this.value);
-                        actualizarProgreso();
-
-                        // auto scroll a la siguiente pregunta
-                        setTimeout(() => {
-
-                            const siguiente = card.nextElementSibling;
-
-                            if (siguiente) {
-                                siguiente.scrollIntoView({
-                                    behavior: "smooth",
-                                    block: "center"
-                                });
-                            }
-
-                        }, 250);
-
-                    });
-                });
-
-                contenedor.appendChild(card);
-
-            });
-
-            /* PREGUNTA FINAL TEXTO */
-
-            if (paginaActual === bloques.length - 1) {
-
-                const cardNivel = document.createElement("div");
-                cardNivel.className = "card";
-
-                cardNivel.innerHTML = `
-
-                <div class="space-y-3">
-
-                    <div class="text-lg font-semibold text-gray-800 leading-relaxed">
-                    56. De acuerdo a todo lo recién contestado y con la mano en el corazón,
-                    ¿en qué nivel percibes que está tu juego para afrontar las ligas 2026?
-                    </div>
-
-                    <div class="bg-gray-50 border rounded-lg p-3 text-sm text-gray-600">
-                    <p class="font-semibold text-gray-700 mb-1">
-                    Ejemplos de respuesta:
-                    </p>
-
-                    <ul class="list-disc list-inside italic space-y-1">
-                    <li><b>Inicial</b></li>
-                    <li><b>Inicial / Medio</b></li>
-                    <li><b>Medio</b></li>
-                    <li><b>Medio / Avanzado</b></li>
-                    <li><b>Avanzado</b></li>
-                    </ul>
-                    </div>
-
-                    <input
-                    type="text"
-                    id="nivelPercibidoInput"
-                    placeholder="Ej: Medio / Avanzado"
-                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
-                    />
-
-                    </div>
-                `;
-
-                const inputNivel = cardNivel.querySelector("#nivelPercibidoInput");
-
-                const guardado = localStorage.getItem("nivelPercibido");
-
-                if (guardado) inputNivel.value = guardado;
-
-                inputNivel.addEventListener("input", function () {
-                    localStorage.setItem("nivelPercibido", this.value);
-                });
-
-                contenedor.appendChild(cardNivel);
-
+            if (paginaActual === 0) {
+                renderInstrucciones();
+            } else if (paginaActual === 1) {
+                renderDatos();
+            } else if (paginaActual <= 1 + bloques.length) {
+                renderBloque(paginaActual - 2);
+            } else {
+                renderPreguntaFinal();
+                btnEnviar.style.display = "block";
             }
 
             agregarBotones();
+            actualizarProgreso();
+
             setTimeout(() => {
-
-                contenedor.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
+                window.scrollTo({ top: 0, behavior: "smooth" });
             }, 100);
+        }
+
+        /* PAGE 0: INSTRUCTIONS */
+        function renderInstrucciones() {
+            const div = document.createElement("div");
+            div.className = "fade-in-up";
+            div.innerHTML = `
+                <div class="card">
+                    <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        📋 Instrucciones
+                    </h2>
+
+                    <div class="space-y-4 text-slate-300 leading-relaxed text-sm">
+                        <p>
+                            Este formulario contiene preguntas sobre <span class="text-white font-semibold">habilidades físicas y técnicas</span>
+                            del bike polo. Es importante ser lo más sincero posible.
+                        </p>
+
+                        <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+                            <p class="text-amber-300 font-semibold mb-1">⚠️ ¿Por qué ser honesto?</p>
+                            <p class="text-amber-200/80 text-sm">
+                                No sirve de nada inflar los números, porque después te tocará jugar en una categoría
+                                que no te acomoda y será tu responsabilidad rendir ahí durante todo el año.
+                            </p>
+                        </div>
+
+                        <p>
+                            El formulario tiene <span class="text-white font-semibold">6 bloques</span> con diferentes preguntas.
+                            Lee todas las preguntas de cada bloque antes de contestar — algunas pueden parecer similares,
+                            pero <span class="text-white font-semibold">no significan exactamente lo mismo</span>.
+                        </p>
+
+                        <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+                            <p class="text-blue-300 font-semibold mb-1">✏️ Ediciones limitadas</p>
+                            <p class="text-blue-200/80 text-sm">
+                                El sistema solo permite corregir hasta <strong>10 respuestas</strong>.
+                                Lee bien cada pregunta antes de marcar.
+                            </p>
+                        </div>
+
+                        <p class="text-white font-semibold mt-4 mb-3">
+                            Marca la alternativa que más se acerque a tu juego:
+                        </p>
+
+                        <div class="grid grid-cols-5 gap-2">
+                            <div class="text-center p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+                                <div class="text-2xl mb-1">😕</div>
+                                <p class="font-semibold text-red-300 text-xs">NUNCA</p>
+                                <p class="text-[10px] text-slate-400 mt-1">0-2 de 10</p>
+                            </div>
+                            <div class="text-center p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                                <div class="text-2xl mb-1">😐</div>
+                                <p class="font-semibold text-orange-300 text-xs">CASI NUNCA</p>
+                                <p class="text-[10px] text-slate-400 mt-1">3-4 de 10</p>
+                            </div>
+                            <div class="text-center p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+                                <div class="text-2xl mb-1">🤔</div>
+                                <p class="font-semibold text-yellow-300 text-xs">A VECES</p>
+                                <p class="text-[10px] text-slate-400 mt-1">5-6 de 10</p>
+                            </div>
+                            <div class="text-center p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+                                <div class="text-2xl mb-1">😊</div>
+                                <p class="font-semibold text-green-300 text-xs">CASI SIEMPRE</p>
+                                <p class="text-[10px] text-slate-400 mt-1">7-8 de 10</p>
+                            </div>
+                            <div class="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                                <div class="text-2xl mb-1">💪</div>
+                                <p class="font-semibold text-blue-300 text-xs">SIEMPRE</p>
+                                <p class="text-[10px] text-slate-400 mt-1">9-10 de 10</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            contenedor.appendChild(div);
+        }
+
+        /* PAGE 1: PLAYER DATA */
+        function renderDatos() {
+            const div = document.createElement("div");
+            div.className = "card fade-in-up";
+
+            const fields = [
+                { id: "nombre", label: "Nombre", type: "text", placeholder: "Ingresa tu nombre", full: true },
+                { id: "anioIngreso", label: "Año de ingreso", type: "number", placeholder: "Ej: 2021" },
+                { id: "nacionales", label: "Torneos nacionales jugados", type: "number", placeholder: "0" },
+                { id: "internacionales", label: "Torneos internacionales jugados", type: "number", placeholder: "0" },
+                { id: "latinos", label: "Torneos Latinoamericanos jugados", type: "number", placeholder: "0" },
+                { id: "somos", label: "Torneos Somos jugados", type: "number", placeholder: "0" },
+                { id: "wildcard", label: "Wild Card / Mundiales jugados", type: "number", placeholder: "0" },
+            ];
+
+            let fieldsHTML = fields.map(f => `
+                <div class="${f.full ? 'md:col-span-2' : ''}">
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">${f.label}</label>
+                    <input id="${f.id}" type="${f.type}" placeholder="${f.placeholder}" class="input-dark"
+                        value="${localStorage.getItem('field_' + f.id) || ''}" />
+                </div>
+            `).join('');
+
+            const ligasValue = localStorage.getItem('field_ligas');
+
+            div.innerHTML = `
+                <h2 class="text-xl font-bold text-white mb-5 flex items-center gap-2">
+                    👤 Datos del Jugador
+                </h2>
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    ${fieldsHTML}
+                </div>
+
+                <p class="font-semibold text-slate-300 mb-3">¿Participas activamente en ligas?</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="radio-card ${ligasValue === 'Si' ? 'checked' : ''}" onclick="selectLiga(this, 'Si')">
+                        <input type="radio" name="ligas" value="Si" class="hidden" ${ligasValue === 'Si' ? 'checked' : ''}>
+                        <span class="text-2xl">⚽</span>
+                        <p class="text-white font-semibold mt-1">Sí</p>
+                    </div>
+                    <div class="radio-card ${ligasValue === 'No' ? 'checked' : ''}" onclick="selectLiga(this, 'No')">
+                        <input type="radio" name="ligas" value="No" class="hidden" ${ligasValue === 'No' ? 'checked' : ''}>
+                        <span class="text-2xl">🚫</span>
+                        <p class="text-white font-semibold mt-1">No</p>
+                    </div>
+                </div>
+            `;
+
+            contenedor.appendChild(div);
+
+            // Save fields on input
+            fields.forEach(f => {
+                const input = document.getElementById(f.id);
+                if (input) {
+                    input.addEventListener("input", function () {
+                        localStorage.setItem('field_' + f.id, this.value);
+                    });
+                }
+            });
+        }
+
+        function selectLiga(el, value) {
+            document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('checked'));
+            el.classList.add('checked');
+            el.querySelector('input').checked = true;
+            localStorage.setItem('field_ligas', value);
+        }
+
+        /* QUESTION BLOCKS */
+        function renderBloque(bloqueIndex) {
+            const bloque = bloques[bloqueIndex];
+
+            const header = document.createElement("div");
+            header.className = "card fade-in-up";
+            header.innerHTML = `
+                <h2 class="text-xl font-bold text-white flex items-center gap-3">
+                    <span class="text-3xl">${bloque.icono}</span>
+                    ${bloque.titulo}
+                </h2>
+                ${bloque.subtitulo ? `<p class="text-slate-400 text-sm mt-2">${bloque.subtitulo}</p>` : ''}
+            `;
+            contenedor.appendChild(header);
+
+            bloque.preguntas.forEach((texto, index) => {
+                const numero = obtenerNumeroPregunta(bloqueIndex, index);
+                const guardada = localStorage.getItem("p" + numero);
+
+                const card = document.createElement("div");
+                card.className = "card fade-in-up";
+                card.style.animationDelay = `${index * 0.05}s`;
+                card.id = `pregunta-${numero}`;
+
+                let scaleHTML = scaleOptions.map(opt => `
+                    <div class="scale-option scale-${opt.value} ${guardada == opt.value ? 'selected' : ''}"
+                         onclick="selectAnswer(${numero}, ${opt.value}, this)"
+                         data-value="${opt.value}">
+                        <div class="text-lg">${opt.emoji}</div>
+                        <div>${opt.label}</div>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="text-base font-semibold text-slate-200 leading-relaxed mb-4">
+                        <span class="text-blue-400 font-bold">${numero}.</span> ${texto}
+                    </div>
+                    <div class="flex gap-2">
+                        ${scaleHTML}
+                    </div>
+                    <div class="scale-legend">
+                        <span>Nunca</span>
+                        <span></span>
+                        <span>A veces</span>
+                        <span></span>
+                        <span>Siempre</span>
+                    </div>
+                `;
+
+                contenedor.appendChild(card);
+            });
+        }
+
+        function selectAnswer(numero, value, el) {
+            const respuestaAnterior = localStorage.getItem("p" + numero);
+
+            if (respuestaAnterior && respuestaAnterior != value) {
+                if (edicionesUsadas >= MAX_EDICIONES) {
+                    alert("⚠️ Has alcanzado el límite de ediciones permitido.");
+                    return;
+                }
+                registrarEdicion();
+            }
+
+            localStorage.setItem("p" + numero, value);
+
+            // Update selection visual
+            const card = el.closest('.card');
+            card.querySelectorAll('.scale-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+
+            actualizarProgreso();
 
         }
 
-        /* BOTONES */
+        /* FINAL QUESTION PAGE */
+        function renderPreguntaFinal() {
+            const div = document.createElement("div");
+            div.className = "card fade-in-up";
 
-        function agregarBotones() {
+            const guardado = localStorage.getItem("nivelPercibido") || "";
 
-            const nav = document.createElement("div");
-            nav.className = "card";
-            nav.style.display = "flex";
-            nav.style.justifyContent = "space-between";
+            div.innerHTML = `
+                <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    🎯 Pregunta Final
+                </h2>
 
-            if (paginaActual > 0) {
+                <div class="text-base font-semibold text-slate-200 leading-relaxed mb-4">
+                    <span class="text-blue-400 font-bold">56.</span>
+                    De acuerdo a todo lo recién contestado y con la mano en el corazón,
+                    ¿en qué nivel percibes que está tu juego para afrontar las ligas 2026?
+                </div>
 
-                const prev = document.createElement("button");
-                prev.innerText = "Anterior";
+                <div class="bg-slate-700/30 rounded-xl p-4 mb-4">
+                    <p class="text-slate-400 text-sm font-semibold mb-2">Ejemplos de respuesta:</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-300 border border-red-500/20">Inicial</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-orange-500/20 text-orange-300 border border-orange-500/20">Inicial / Medio</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-300 border border-yellow-500/20">Medio</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-300 border border-green-500/20">Medio / Avanzado</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300 border border-blue-500/20">Avanzado</span>
+                    </div>
+                </div>
 
-                prev.className =
-                    "px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg shadow transition";
+                <input type="text" id="nivelPercibidoInput" placeholder="Ej: Medio / Avanzado"
+                    class="input-dark text-lg" value="${guardado}" />
+            `;
 
-                prev.onclick = () => {
-                    paginaActual--;
-                    cargarPagina();
-                };
+            contenedor.appendChild(div);
 
-                nav.appendChild(prev);
+            const input = div.querySelector("#nivelPercibidoInput");
+            input.addEventListener("input", function () {
+                localStorage.setItem("nivelPercibido", this.value);
+            });
+        }
 
+        /* NAVIGATION BUTTONS */
+        /* PER-PAGE VALIDATION */
+        function validarPaginaActual() {
+            // Page 0: instructions — always valid
+            if (paginaActual === 0) return true;
+
+            // Page 1: player data
+            if (paginaActual === 1) {
+                const fieldIds = ["nombre", "anioIngreso", "nacionales", "internacionales", "latinos", "somos", "wildcard"];
+                const missing = fieldIds.filter(id => {
+                    const el = document.getElementById(id);
+                    return !el || !el.value.trim();
+                });
+                const ligas = document.querySelector('input[name="ligas"]:checked');
+
+                if (missing.length > 0 || !ligas) {
+                    // Highlight missing fields
+                    fieldIds.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) {
+                            if (!el.value.trim()) {
+                                el.style.borderColor = '#ef4444';
+                                el.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+                            } else {
+                                el.style.borderColor = '';
+                                el.style.boxShadow = '';
+                            }
+                        }
+                    });
+                    if (!ligas) {
+                        document.querySelectorAll('.radio-card').forEach(c => c.style.borderColor = '#ef4444');
+                    }
+                    alert("⚠️ Completa todos los campos antes de continuar.");
+                    return false;
+                }
+                return true;
             }
 
-            if (paginaActual < bloques.length - 1) {
+            // Pages 2-7: question blocks
+            if (paginaActual >= 2 && paginaActual <= 1 + bloques.length) {
+                const bloqueIndex = paginaActual - 2;
+                const bloque = bloques[bloqueIndex];
+                let faltantes = [];
 
+                bloque.preguntas.forEach((_, index) => {
+                    const numero = obtenerNumeroPregunta(bloqueIndex, index);
+                    if (!localStorage.getItem("p" + numero)) faltantes.push(numero);
+                });
+
+                if (faltantes.length > 0) {
+                    // Highlight missing
+                    document.querySelectorAll(".pregunta-faltante").forEach(el => el.classList.remove("pregunta-faltante"));
+                    faltantes.forEach(num => {
+                        const card = document.getElementById(`pregunta-${num}`);
+                        if (card) card.classList.add("pregunta-faltante");
+                    });
+                    alert(`⚠️ Faltan ${faltantes.length} pregunta${faltantes.length > 1 ? 's' : ''} por responder en este bloque.`);
+                    const first = document.getElementById(`pregunta-${faltantes[0]}`);
+                    if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
+                    return false;
+                }
+                return true;
+            }
+
+            return true;
+        }
+
+        function agregarBotones() {
+            const nav = document.createElement("div");
+            nav.style.display = "flex";
+            nav.style.justifyContent = "space-between";
+            nav.style.gap = "12px";
+            nav.style.marginTop = "16px";
+            nav.style.marginBottom = "20px";
+
+            if (paginaActual > 0) {
+                const prev = document.createElement("button");
+                prev.type = "button";
+                prev.innerText = "← Anterior";
+                prev.className = "btn-secondary";
+                prev.onclick = () => { paginaActual--; cargarPagina(); };
+                nav.appendChild(prev);
+            } else {
+                nav.appendChild(document.createElement("div")); // spacer
+            }
+
+            const maxPage = 2 + bloques.length; // last page index
+            if (paginaActual < maxPage) {
                 const next = document.createElement("button");
-                next.innerText = "Siguiente";
-
-                next.className =
-                    "px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition";
-
+                next.type = "button";
+                next.innerText = paginaActual === 0 ? "Comenzar →" : "Siguiente →";
+                next.className = "btn-primary";
+                next.style.width = "auto";
+                next.style.padding = "12px 32px";
                 next.onclick = () => {
+                    if (!validarPaginaActual()) return;
                     paginaActual++;
                     cargarPagina();
                 };
-
                 nav.appendChild(next);
-
             }
 
             contenedor.appendChild(nav);
-
         }
 
-        /* PROGRESO */
-
+        /* PROGRESS */
         function actualizarProgreso() {
-
             let respondidas = 0;
-
             for (let i = 1; i <= preguntas.length; i++) {
                 if (localStorage.getItem("p" + i)) respondidas++;
             }
@@ -797,213 +847,191 @@
             const porcentaje = Math.round((respondidas / preguntas.length) * 100);
 
             document.getElementById("progressBar").style.width = porcentaje + "%";
-            document.getElementById("progressText").innerText = porcentaje + "% completado";
+            document.getElementById("progressText").innerText = `${respondidas}/${preguntas.length} preguntas — ${porcentaje}%`;
 
-
+            const maxPage = 2 + bloques.length;
+            if (paginaActual > 0) {
+                document.getElementById("progressPage").innerText = `Página ${paginaActual} de ${maxPage}`;
+            }
         }
 
         function formatearTiempo(segundos) {
-
             const horas = Math.floor(segundos / 3600);
             const minutos = Math.floor((segundos % 3600) / 60);
             const seg = segundos % 60;
-
             return [
                 horas.toString().padStart(2, "0"),
                 minutos.toString().padStart(2, "0"),
                 seg.toString().padStart(2, "0")
             ].join(":");
-
         }
 
-        /* ENVIO */
+        /* CONFETTI */
+        function lanzarConfetti() {
+            const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#22c55e', '#eab308', '#f97316', '#ef4444'];
+            for (let i = 0; i < 60; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.width = (6 + Math.random() * 8) + 'px';
+                confetti.style.height = (6 + Math.random() * 8) + 'px';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
 
+        /* SUBMIT */
         document.getElementById("formulario").addEventListener("submit", function (e) {
-
             e.preventDefault();
 
-            // VALIDAR QUE TODAS LAS PREGUNTAS ESTÉN RESPONDIDAS
+            // Validate questions
             let faltantes = [];
-
             for (let i = 1; i <= preguntas.length; i++) {
-
-                const respuesta = localStorage.getItem("p" + i);
-
-                if (!respuesta) {
-                    faltantes.push(i);
-                }
-
+                if (!localStorage.getItem("p" + i)) faltantes.push(i);
             }
-            // limpiar marcas anteriores
-            document.querySelectorAll(".pregunta-faltante").forEach(el => {
-                el.classList.remove("pregunta-faltante");
-            });
 
-            // marcar preguntas faltantes
+            // Clear previous marks
+            document.querySelectorAll(".pregunta-faltante").forEach(el => el.classList.remove("pregunta-faltante"));
+
+            // Mark missing on current page
             faltantes.forEach(num => {
-
-                const input = document.querySelector(`input[name="p${num}"]`);
-
-                if (input) {
-
-                    const card = input.closest("[class*='bg']");
-
-                    if (card) {
-                        card.classList.add("pregunta-faltante");
-                    }
-
-                }
-
+                const card = document.getElementById(`pregunta-${num}`);
+                if (card) card.classList.add("pregunta-faltante");
             });
 
-            // VALIDAR CAMPOS DEL FORMULARIO
-            const nombre = document.getElementById("nombre")?.value.trim();
-            const anioIngreso = document.getElementById("anioIngreso")?.value.trim();
-            const nacionales = document.getElementById("nacionales")?.value.trim();
-            const internacionales = document.getElementById("internacionales")?.value.trim();
-            const latinos = document.getElementById("latinos")?.value.trim();
-            const somos = document.getElementById("somos")?.value.trim();
-            const wildcard = document.getElementById("wildcard")?.value.trim();
-
-            const ligas = document.querySelector('input[name="ligas"]:checked');
-
+            // Validate fields
+            const fieldIds = ["nombre", "anioIngreso", "nacionales", "internacionales", "latinos", "somos", "wildcard"];
+            const missingFields = fieldIds.filter(id => !localStorage.getItem('field_' + id));
+            const ligas = localStorage.getItem('field_ligas');
             const nivelPercibido = localStorage.getItem("nivelPercibido");
 
-            if (
-                faltantes.length > 0 ||
-                !nombre ||
-                !anioIngreso ||
-                !nacionales ||
-                !internacionales ||
-                !latinos ||
-                !somos ||
-                !wildcard ||
-                !ligas ||
-                !nivelPercibido
-            ) {
-
+            if (faltantes.length > 0 || missingFields.length > 0 || !ligas || !nivelPercibido) {
                 let mensaje = "⚠️ Debes completar el formulario.\n\n";
 
                 if (faltantes.length > 0) {
                     mensaje += `• Faltan ${faltantes.length} preguntas por responder\n`;
                 }
-
-                if (!nombre || !anioIngreso || !nacionales || !internacionales || !latinos || !somos || !wildcard) {
+                if (missingFields.length > 0) {
                     mensaje += "• Debes completar tus datos personales\n";
                 }
-
                 if (!ligas) {
                     mensaje += "• Debes indicar si participas en ligas\n";
                 }
-
                 if (!nivelPercibido) {
                     mensaje += "• Debes indicar tu nivel percibido\n";
                 }
 
-                if (mensaje === "⚠️ Debes completar el formulario.\n\n") {
-                    mensaje += "• Hay campos incompletos en el formulario\n";
-                }
-
                 alert(mensaje);
 
+                // Navigate to first missing question's block
                 if (faltantes.length > 0) {
-
                     const primeraFaltante = faltantes[0];
-
-                    const bloqueIndex = bloques.findIndex(b => {
-                        const inicio = bloques.slice(0, bloques.indexOf(b)).reduce((a, c) => a + c.preguntas.length, 0) + 1;
-                        const fin = inicio + b.preguntas.length - 1;
-                        return primeraFaltante >= inicio && primeraFaltante <= fin;
-                    });
-
-                    paginaActual = bloqueIndex;
-                    cargarPagina();
-
-                    setTimeout(() => {
-
-                        const elemento = document.querySelector(`input[name="p${primeraFaltante}"]`);
-
-                        if (elemento) {
-                            elemento.scrollIntoView({
-                                behavior: "smooth",
-                                block: "center"
-                            });
+                    let acum = 0;
+                    for (let b = 0; b < bloques.length; b++) {
+                        acum += bloques[b].preguntas.length;
+                        if (primeraFaltante <= acum) {
+                            paginaActual = b + 2;
+                            cargarPagina();
+                            setTimeout(() => {
+                                const el = document.getElementById(`pregunta-${primeraFaltante}`);
+                                if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+                            }, 200);
+                            break;
                         }
-
-                    }, 200);
-
+                    }
+                } else if (missingFields.length > 0 || !ligas) {
+                    paginaActual = 1;
+                    cargarPagina();
                 }
 
                 return;
             }
 
+            // Calculate score
             let puntaje = 0;
             const respuestas = {};
-
             for (let i = 1; i <= preguntas.length; i++) {
-
                 const r = localStorage.getItem("p" + i);
-
                 if (r) {
-
                     puntaje += parseInt(r);
                     respuestas["p" + i] = r;
-
                 }
-
             }
 
+            // Scoring thresholds for 1-5 scale (55 questions, range 55-275)
             let nivel = "";
-
-            if (puntaje <= 80) nivel = "Inicial";
-            else if (puntaje <= 105) nivel = "Inicial(+)";
-            else if (puntaje <= 129) nivel = "Intermedio";
-            else if (puntaje <= 154) nivel = "Intermedio(+)";
+            if (puntaje <= 113) nivel = "Inicial";
+            else if (puntaje <= 150) nivel = "Inicial(+)";
+            else if (puntaje <= 188) nivel = "Intermedio";
+            else if (puntaje <= 225) nivel = "Intermedio(+)";
             else nivel = "Avanzado";
 
             const tiempoTotalSegundos = Math.round((Date.now() - tiempoInicio) / 1000);
             const tiempoFormateado = formatearTiempo(tiempoTotalSegundos);
 
             const data = {
-
-                nombre: document.getElementById("nombre").value,
-                anioIngreso: document.getElementById("anioIngreso").value,
-                nacionales: document.getElementById("nacionales").value,
-                internacionales: document.getElementById("internacionales").value,
-                latinos: document.getElementById("latinos").value,
-                somos: document.getElementById("somos").value,
-                wildcard: document.getElementById("wildcard").value,
-
-                ligas: document.querySelector('input[name="ligas"]:checked').value,
-
-                nivelPercibido: localStorage.getItem("nivelPercibido") || "",
-
+                nombre: localStorage.getItem('field_nombre'),
+                anioIngreso: localStorage.getItem('field_anioIngreso'),
+                nacionales: localStorage.getItem('field_nacionales'),
+                internacionales: localStorage.getItem('field_internacionales'),
+                latinos: localStorage.getItem('field_latinos'),
+                somos: localStorage.getItem('field_somos'),
+                wildcard: localStorage.getItem('field_wildcard'),
+                ligas: localStorage.getItem('field_ligas'),
+                nivelPercibido: nivelPercibido || "",
                 puntaje,
                 nivel,
-
                 tiempo: tiempoFormateado,
-
                 ...respuestas
-
             };
 
             const formData = new FormData();
-
             Object.keys(data).forEach(k => formData.append(k, data[k]));
+
+            // Disable button
+            const btn = document.getElementById("btnEnviar");
+            btn.disabled = true;
+            btn.innerText = "Enviando...";
 
             fetch(endpoint, { method: "POST", body: formData })
                 .then(() => {
+                    // Show success page
+                    document.getElementById("formulario").style.display = "none";
+                    document.getElementById("progressWrapper").style.display = "none";
+
+                    const nivelEmojis = {
+                        "Inicial": "🌱",
+                        "Inicial(+)": "🌿",
+                        "Intermedio": "🌳",
+                        "Intermedio(+)": "🔥",
+                        "Avanzado": "⭐"
+                    };
+
+                    const successPage = document.getElementById("successPage");
+                    successPage.style.display = "block";
+
+                    document.getElementById("resultadoNivel").innerHTML = `
+                        <div class="text-4xl mb-2">${nivelEmojis[nivel] || '🏑'}</div>
+                        <p class="text-slate-400 text-sm">Tu nivel calculado</p>
+                        <p class="text-2xl font-extrabold text-white mt-1">${nivel}</p>
+                        <p class="text-slate-500 text-xs mt-2">${puntaje} puntos • ${tiempoFormateado}</p>
+                    `;
+
+                    lanzarConfetti();
 
                     localStorage.clear();
-
-                    document.getElementById("mensajeExito").style.display = "block";
-
-                    setTimeout(() => location.reload(), 1200);
-
+                })
+                .catch(() => {
+                    btn.disabled = false;
+                    btn.innerText = "Enviar Evaluación";
+                    alert("Error al enviar. Intenta nuevamente.");
                 });
-
         });
 
+        // Init
         actualizarProgreso();
         cargarPagina();
 
